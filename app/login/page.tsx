@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, Suspense } from "react"
+import dynamic from "next/dynamic"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -28,7 +29,7 @@ const registerSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>
 type RegisterFormData = z.infer<typeof registerSchema>
 
-function LoginContent() {
+function LoginContentComponent() {
   const [activeTab, setActiveTab] = useState<"login" | "register">("login")
   const [isLoading, setIsLoading] = useState(false)
   const [demoLoading, setDemoLoading] = useState<string | null>(null)
@@ -507,6 +508,10 @@ function LoginContent() {
     </AuthCard>
   )
 }
+
+const LoginContent = dynamic(() => Promise.resolve(LoginContentComponent), {
+  ssr: false,
+})
 
 export default function LoginPage() {
   return (

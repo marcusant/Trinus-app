@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: "Marcus PT — Personal Training",
   description:
     "Transforma o teu corpo e mente com treino personalizado. Corpo funcional, mente consciente e hábitos de vida.",
+  icons: {
+    icon: "/icon-192.png",
+    apple: "/icon-192.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",

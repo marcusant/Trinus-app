@@ -12,6 +12,7 @@
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { EntrarDropdown } from "@/components/EntrarDropdown"
+import { TransparentImage } from "@/components/TransparentImage"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { AvatarSeeded as Avatar, AvatarStack } from "@/components/ui/avatar-stack"
@@ -129,16 +130,21 @@ export default function TrinusLanding() {
         >
           <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
             <button onClick={() => scrollTo("hero")} className="flex items-center gap-3 cursor-pointer group">
-              {/* Símbolo: Tridente da Integração (IM) */}
-              <svg viewBox="0 0 40 40" className="w-10 h-10 fill-none stroke-primary stroke-[1.8] transition-all duration-300 group-hover:stroke-purple-400 group-hover:scale-105">
-                {/* O Tridente que forma o M e contém o I */}
-                <path d="M12 28V14L16 18L20 10L24 18L28 14V28" strokeLinejoin="round" strokeLinecap="round" /> {/* O M com pontas de tridente */}
-                <path d="M20 10V30" strokeLinecap="round" /> {/* O I como eixo central (Essência) */}
-                <circle cx="20" cy="30" r="1" fill="currentColor" /> {/* Ponto de fundação */}
-              </svg>
-              <div className={`flex items-baseline gap-1 transition-all duration-500 overflow-hidden ${scrolled ? "max-w-0 opacity-0 ml-0" : "max-w-[300px] opacity-100 ml-1"}`}>
-                <span className="text-xl font-extrabold tracking-tight text-primary whitespace-nowrap">TRINUS</span>
-                <span className="text-xl font-light tracking-tight text-foreground whitespace-nowrap">MARCUS</span>
+              {/* Símbolo: logo_trinus.png original (fundo removido dinamicamente) */}
+              <TransparentImage
+                src="/logo_trinus.png"
+                alt="TRINUS Logo"
+                className="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-105 shrink-0"
+                style={{ filter: "hue-rotate(230deg) saturate(2.5) brightness(1.1)" }}
+              />
+              <div className={`flex items-center transition-all duration-500 overflow-hidden ${scrolled ? "max-w-0 opacity-0 ml-0" : "max-w-[300px] opacity-100 ml-2"}`}>
+                {/* Nome: nome_trinus.png original (fundo removido dinamicamente) */}
+                <TransparentImage
+                  src="/nome_trinus.png"
+                  alt="TRINUS"
+                  className="h-7 w-auto object-contain shrink-0"
+                  style={{ filter: "hue-rotate(230deg) saturate(2.5) brightness(1.1)" }}
+                />
               </div>
             </button>
 

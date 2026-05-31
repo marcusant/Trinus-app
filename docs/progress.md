@@ -94,6 +94,11 @@
   - [x] Refinada a lógica de segurança em `proxy.ts` para capturar sessões inconsistentes no banco ativo, efetuando o deslog automático (`signOut()`) e permitindo carregar a página de login sem loops de redirecionamento no client-side.
   - [x] Criado o script de provisionamento de usuários (`scripts/provision-demo-users.js`) para cadastrar as credenciais de demonstração no banco ativo do Supabase.
   - [x] Contornado trigger de restrição de papel (`prevent_profile_role_change_trg` e `profiles_prevent_role_change`) usando bypass SQL via MCP no Supabase para definir as permissões de acesso de Administrador, Treinador e Cliente na base ativa.
+- [x] Atualização da Logo do PWA (Open in app):
+  - [x] Refatorado o script headless `scripts/generate-pwa-icons.js` para remover de forma dinâmica o fundo preto/verde escuro da logo original da Landing Page (`logo_trinus.png`) e aplicar o filtro de matiz para violeta místico.
+  - [x] Gerados e salvos com sucesso os ícones `/icon-192.png` e `/icon-512.png` na pasta `/public` com fundos 100% transparentes e proporções calibradas para ícones de aplicativos móveis.
+  - [x] Vinculados e integrados os novos ícones PWA nos metadados globais do `app/layout.tsx` para assegurar a descoberta correta da logo premium em dispositivos iOS e Android.
+  - [x] Regenerados os ícones PWA com fundo 100% transparente e cor violeta místico idênticos ao logotipo da Landing Page, validados via build do Next.js sem erros, e commitados de forma segura.
 
 ---
 
