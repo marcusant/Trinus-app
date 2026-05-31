@@ -20,7 +20,7 @@ Construir a plataforma TRINUS-APP (Next.js App Router + Supabase) com Landing Pa
 
 ### ⚡ Fase 2: Link
 - [x] Validar `.env` e conexões de API
-- [ ] Scripts de handshake em `tools/`
+- [x] Scripts de handshake em `tools/` (criados scripts de provisionamento de usuários e diagnóstico de banco em `scripts/`)
 
 ### ⚙️ Fase 3: Arquitetura
 - [ ] Criar POPs em `architecture/`

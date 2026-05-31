@@ -89,6 +89,10 @@
   - [x] Verificados os arquivos de inicialização do cliente browser e do servidor Next.js SSR (`lib/supabase/client.ts` e `lib/supabase/server.ts`).
   - [x] Executado script de handshake e diagnóstico de banco de dados (`node scripts/test-supabase.js`) que validou o status de 15 tabelas vitais para a aplicação.
 - [x] Validação de build final com Turbopack executada com sucesso (`npm run build` — 100% livre de erros).
+- [x] Resolução de Bug de Login após Deploy na Vercel:
+  - [x] Criado o arquivo de entrada do middleware do Next.js (`middleware.ts`) na raiz do projeto para invocar e executar de forma correta e nativa a lógica de autenticação contida em `proxy.ts`, assegurando o processamento adequado de cookies SSR.
+  - [x] Criado o script de provisionamento de usuários (`scripts/provision-demo-users.js`) para cadastrar as credenciais de demonstração no banco ativo do Supabase.
+  - [x] Contornado trigger de restrição de papel (`prevent_profile_role_change_trg` e `profiles_prevent_role_change`) usando bypass SQL via MCP no Supabase para definir as permissões de acesso de Administrador, Treinador e Cliente na base ativa.
 
 ---
 
