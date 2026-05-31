@@ -80,6 +80,10 @@
   - [x] Inicializado repositório Git local (`git init`).
   - [x] Configurado o remote origin para `https://github.com/marcusant/Trinus-app`.
   - [x] Efetuado fetch seguro (`git fetch origin`) para auditar o repositório remoto.
+  - [x] Renomeada a ramificação local padrão de `master` para `main`.
+  - [x] Adicionados e commitados todos os arquivos de arquitetura premium locais (`feat: init TRINUS-APP...`).
+  - [x] Executado o pull e merge inteligente com o histórico remoto (`-X ours`) para reter o README.md detalhado local.
+  - [x] Efetuado push completo com sucesso para a branch `main` do repositório remoto (`git push -u origin main`).
 - [x] Validação de build final com Turbopack executada com sucesso (`npm run build` — 100% livre de erros).
 
 ---
