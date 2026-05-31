@@ -98,7 +98,7 @@
   - [x] Refatorado o script headless `scripts/generate-pwa-icons.js` para remover de forma dinâmica o fundo preto/verde escuro da logo original da Landing Page (`logo_trinus.png`) e aplicar o filtro de matiz para violeta místico.
   - [x] Gerados e salvos com sucesso os ícones `/icon-192.png` e `/icon-512.png` na pasta `/public` com fundos 100% transparentes e proporções calibradas para ícones de aplicativos móveis.
   - [x] Vinculados e integrados os novos ícones PWA nos metadados globais do `app/layout.tsx` para assegurar a descoberta correta da logo premium em dispositivos iOS e Android.
-  - [x] Regenerados os ícones PWA com fundo 100% transparente e cor violeta místico idênticos ao logotipo da Landing Page, validados via build do Next.js sem erros, e commitados de forma segura.
+  - [x] Regenerados os ícones PWA com fundo 100% transparente e cor violeta místico idênticos ao logotipo da Landing Page, validados via build do Next.js sem erros, commitados e integrados com push para a branch principal (`main`), ativando a compilação automática na Vercel.
 
 ---
 
