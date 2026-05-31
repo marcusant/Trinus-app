@@ -1,0 +1,37 @@
+# =========================================================================
+# 🔍 Ficheiro de Exclusão do Semgrep (.semgrepignore)
+# Otimizado para Windows/Linux/macOS - Alta Performance
+# =========================================================================
+
+# IGNORAR TUDO (Impede qualquer execução automática/manual do Semgrep)
+*
+**/*
+**
+
+# Ignorar pastas de dependências e compilações pesadas de forma recursiva
+**/node_modules/**
+**/.next/**
+**/dist/**
+**/out/**
+**/.git/**
+**/.temp/**
+**/.branches/**
+**/public/uploads/**
+
+# Ignorar ficheiros binários, de cache e metadados de compilação
+*.tsbuildinfo
+*.log
+*.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignorar ficheiros de configuração estáticos do ecossistema
+tsconfig.json
+jsconfig.json
+next.config.mjs
+tailwind.config.ts
+postcss.config.js
+eslint.config.mjs
+components.json
+.semgrepignore

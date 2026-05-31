@@ -1,0 +1,52 @@
+{
+  "name": "trinus-app",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "types:sync": "npx supabase gen types typescript --project-id ptvvzdheedtuwfpzlrhg > types/database.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@heroicons/react": "^2.2.0",
+    "@hookform/resolvers": "^5.2.2",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@react-pdf/renderer": "^4.5.1",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.102.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.4.2",
+    "lucide-react": "^1.8.0",
+    "next": "^16.2.2",
+    "next-themes": "^0.4.6",
+    "radix-ui": "^1.4.3",
+    "react": "^18.3.0",
+    "react-day-picker": "^9.14.0",
+    "react-dom": "^18.3.0",
+    "react-hook-form": "^7.72.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.5.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^5"
+  }
+}

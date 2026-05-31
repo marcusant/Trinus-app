@@ -1,0 +1,471 @@
+/* ═══════════════════════════════════════════════════════════════
+   pt-app · TRINUS MARCUS Design System · Tailwind v4
+   Paleta: PRETO ABSOLUTO + VIOLETA MÍSTICO + 3 PILARES
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+/* ─────────────────────────────────────────────
+   § @theme · TOKENS NATIVOS DO TAILWIND v4
+   Geram automaticamente classes utilitárias
+   (bg-primary, text-foreground, etc.)
+   ───────────────────────────────────────────── */
+@theme {
+  --radius: 1.25rem;
+  /* Aumentado para 20px (bento box style) */
+
+  /* Surfaces - Cinzas Suaves Otimizados Estilo Hevy (Evitam Fadiga Visual) */
+  --color-background: #0a0a0c;
+  /* Preto suavizado estilo Hevy (não é 100% absoluto, evita rigidez) */
+  --color-foreground: #d1d1d6;
+  /* Off-white mais fosco/suave para leitura (tira o led) */
+  --color-card: #1c1c1e;
+  /* Card cinza escuro sólido estilo iOS/Hevy */
+  --color-card-foreground: #d1d1d6;
+  --color-popover: #1c1c1e;
+  /* Modais e popovers sólidos */
+  --color-popover-foreground: #d1d1d6;
+  --color-muted: #2c2c2e;
+  --color-muted-foreground: #8e8e93;
+  /* Cinza fosco de apoio */
+
+  /* Marca - Neon Violeta/Azul */
+  --color-primary: oklch(0.59 0.20 290);
+  /* Roxo Neon Vibrante */
+  --color-primary-foreground: #d1d1d6;
+  /* Texto branco no botão ao invés de preto para maior contraste visual */
+  --color-secondary: #121212;
+  /* Fundo secundário sutil */
+  --color-secondary-foreground: #d1d1d6;
+  --color-accent: oklch(0.68 0.16 290);
+  /* Violeta mais claro */
+  --color-accent-foreground: #d1d1d6;
+
+  /* Pilares - Tons Fluorescentes */
+  --color-pillar-body: oklch(0.75 0.22 45);
+  /* Laranja Eletrizante */
+  --color-pillar-mind: oklch(0.75 0.22 155);
+  /* Verde Esmeralda Neon */
+  --color-pillar-essence: oklch(0.59 0.20 290);
+  /* Roxo Neon Vibrante */
+
+  /* Semânticas */
+  --color-destructive: oklch(0.6 0.25 25);
+  /* Vermelho Vivo */
+  --color-destructive-foreground: #d1d1d6;
+  --color-success: oklch(0.75 0.22 155);
+  --color-success-foreground: #000000;
+  --color-warning: oklch(0.8 0.2 80);
+  --color-warning-foreground: #000000;
+
+  /* Bordas e interação */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-input: rgba(255, 255, 255, 0.06);
+  --color-ring: oklch(0.59 0.20 290);
+
+  /* Sidebar */
+  --color-sidebar: #121212;
+  --color-sidebar-foreground: #d1d1d6;
+  --color-sidebar-primary: oklch(0.59 0.20 290);
+  --color-sidebar-primary-foreground: #000000;
+  --color-sidebar-accent: #1c1c1e;
+  --color-sidebar-accent-foreground: #d1d1d6;
+  --color-sidebar-border: rgba(255, 255, 255, 0.05);
+  --color-sidebar-ring: oklch(0.59 0.20 290);
+
+  /* Charts */
+  --color-chart-1: oklch(0.59 0.20 290);
+  --color-chart-2: oklch(0.55 0.18 285);
+  --color-chart-3: oklch(0.68 0.16 290);
+  --color-chart-4: oklch(0.78 0.16 160);
+  --color-chart-5: oklch(0.6 0.18 25);
+
+  /* Font */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Tipografia canônica */
+  --text-hero: var(--text-hero);
+  --text-h2: var(--text-h2);
+  --text-eyebrow: var(--text-eyebrow);
+  --tracking-hero: var(--tracking-hero);
+  --tracking-eyebrow: var(--tracking-eyebrow);
+  --leading-hero: var(--leading-hero);
+
+  /* Containers */
+  --width-container-default: var(--container-default);
+  --width-container-wide: var(--container-wide);
+  --width-container-text: var(--container-text);
+  --width-container-narrow: var(--container-narrow);
+}
+
+/* ─────────────────────────────────────────────
+   § :root · TOKENS AUXILIARES (não-Tailwind)
+   Alphas, gradients, shadows, CTA âmbar
+   ───────────────────────────────────────────── */
+:root {
+  /* — Superfície elevada (reservada para modais e drawers do dashboard) — */
+  --surface-elevated: #242428;
+  --surface-elevated-foreground: #d1d1d6;
+
+  --footer: #060608;
+  --primary-hover: oklch(0.64 0.18 290);
+  --primary-hover-label: oklch(0.69 0.15 290);
+
+  /* — Escala tipográfica — */
+  --text-hero: clamp(2.5rem, 5vw, 3.25rem);
+  /* 40px → 52px responsivo */
+  --text-h2: 2.25rem;
+  /* 36px */
+  --text-eyebrow: 0.8125rem;
+  /* 13px */
+  --tracking-hero: -0.02em;
+  --tracking-eyebrow: 0.08em;
+  --leading-hero: 1.05;
+
+  /* — Containers — */
+  --container-default: 60rem;
+  /* 960px (reduzido para centralizar mais o conteúdo) */
+  --container-wide: 56rem;
+  /* 896px */
+  --container-text: 40rem;
+  /* 640px */
+  --container-narrow: 48rem;
+  /* 768px */
+
+  /* Alphas - Ajustados para o tom de roxo rico (baseados em #8340f0) */
+  --primary-alpha-4: rgba(131, 64, 240, 0.04);
+  --primary-alpha-8: rgba(131, 64, 240, 0.08);
+  --primary-alpha-12: rgba(131, 64, 240, 0.12);
+  --primary-alpha-15: rgba(131, 64, 240, 0.15);
+  --primary-alpha-22: rgba(131, 64, 240, 0.22);
+  --primary-alpha-30: rgba(131, 64, 240, 0.30);
+  --primary-alpha-40: rgba(131, 64, 240, 0.40);
+  --primary-alpha-55: rgba(131, 64, 240, 0.55);
+
+  /* Shadows STEALTH -> MATTE ELEGANT (Unificado e livre de halos ofuscantes) */
+  --shadow-glow: 0 0 0 1px rgba(131, 64, 240, 0.25), 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-glow-strong: 0 0 0 1px rgba(131, 64, 240, 0.45), 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-glow-whisper: 0 0 0 1px rgba(131, 64, 240, 0.15);
+  --shadow-glow-active: 0 0 0 1px rgba(131, 64, 240, 0.4), 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(244, 244, 245, 0.05) inset;
+  /* Vidro refletivo e sombra funda */
+
+  /* Gradientes */
+  --gradient-urgency: linear-gradient(90deg, oklch(0.59 0.20 290), oklch(0.50 0.18 260));
+  /* Gradiente roxo-azul */
+  --gradient-cta-section: linear-gradient(180deg, #121214, #1c1c1f);
+  --gradient-card-hover: linear-gradient(180deg, rgba(42, 42, 46, 0.8), rgba(28, 28, 31, 0.6));
+  --gradient-hero-ambient:
+    radial-gradient(ellipse 60% 60% at 20% 10%, oklch(0.59 0.20 290 / 0.22), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 80% 80%, oklch(0.75 0.22 45 / 0.15), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 50% 50%, oklch(0.75 0.22 155 / 0.1), transparent 60%);
+
+  /* CTA âmbar -> Gradiente Laranja Vibrante */
+  --cta-amber-start: #F97316;
+  --cta-amber-end: #EA580C;
+  --cta-amber-hover-start: #FB923C;
+  --cta-amber-hover-end: #F97316;
+
+  /* Sombra sutil para o hover do CTA (glow reduzido para quase imperceptível) */
+  --shadow-cta-amber: 0 0 8px rgba(234, 88, 12, 0.08);
+
+  /* — Sidebar (reservada para layout do dashboard — próxima fase) — */
+  --color-accent-hover: var(--primary-hover);
+  --color-bg-base: oklch(0.04 0 0);
+  --color-surface: oklch(0.09 0 0);
+  --color-surface-hover: oklch(0.11 0 0);
+  --color-text: oklch(0.96 0 0);
+  --color-text-muted: oklch(0.6 0 0);
+
+  /* — Gamificação: Cores de Nível (semânticas) — */
+  --level-bronze: #CD7F32;
+  --level-silver: #C0C0C0;
+  --level-gold: #FFD700;
+  --level-platinum: #E5E4E2;
+  --level-diamond: #B9F2FF;
+}
+
+/* ─────────────────────────────────────────────
+   § BASE
+   ───────────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* ─────────────────────────────────────────────
+   § UTILITIES CUSTOM
+   ───────────────────────────────────────────── */
+@layer utilities {
+  .glow-primary {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-primary-hover:hover {
+    box-shadow: var(--shadow-glow-strong);
+  }
+
+  .text-primary-faint {
+    color: var(--primary-alpha-8);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-primary-subtle {
+    background-color: var(--primary-alpha-12);
+  }
+
+  .border-primary-border {
+    border-color: var(--primary-alpha-40);
+  }
+
+  .bg-footer {
+    background-color: var(--footer);
+  }
+
+  /* Pilar reveal */
+  .pilar-num,
+  .pilar-label,
+  .pilar-icon {
+    opacity: 0.3;
+    transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .pilar-card:hover .pilar-num,
+  .pilar-card:hover .pilar-label,
+  .pilar-card:hover .pilar-icon {
+    opacity: 1;
+  }
+
+  .pilar-underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    border-radius: 0 0 calc(var(--radius) * 1.5) calc(var(--radius) * 1.5);
+  }
+
+  .pilar-card:hover .pilar-underline {
+    transform: scaleX(1);
+  }
+
+
+  /* Animations */
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      box-shadow: var(--shadow-glow);
+    }
+
+    50% {
+      box-shadow: var(--shadow-glow-strong);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes scroll-x {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll-x {
+    animation: scroll-x 40s linear infinite;
+  }
+
+  .animate-scroll-x:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(var(--spacing-6));
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+  }
+
+  .reveal.visible {
+    animation: fade-up 0.7s ease-out forwards;
+  }
+
+  /* § 6.11 — Escala tipográfica canônica */
+  .text-hero {
+    font-size: var(--text-hero);
+    font-weight: 800;
+    line-height: var(--leading-hero);
+    letter-spacing: var(--tracking-hero);
+  }
+
+  .text-h2 {
+    font-size: var(--text-h2);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .text-eyebrow {
+    font-size: var(--text-eyebrow);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+  }
+
+  .section-padding {
+    @apply px-5 py-20 sm:py-24 md:py-28;
+  }
+
+  /* Gamificação: Animação de fogo para streak */
+  @keyframes flame-pulse {
+
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    50% {
+      transform: scale(1.18) translateY(-1px);
+      opacity: 0.85;
+    }
+  }
+
+  .animate-flame {
+    animation: flame-pulse 1.5s ease-in-out infinite;
+  }
+
+  /* — Sidebar Container (SSOT) — */
+  .sidebar-container {
+    display: none;
+    flex-direction: column;
+    width: 16rem;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(28, 28, 30, 0.6);
+    backdrop-filter: blur(24px);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 40;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-glow-whisper);
+    justify-content: space-between;
+  }
+
+  @media (min-width: 1280px) {
+    .sidebar-container {
+      display: flex;
+    }
+  }
+
+  /* — Sidebar Profile Card (SSOT) — */
+  .sidebar-profile-card {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* — Sidebar Nav Section (SSOT) — */
+  .sidebar-nav {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem; /* space-y-1.5 */
+  }
+
+  /* — Sidebar Footer (SSOT) — */
+  .sidebar-footer {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* — Sidebar Nav Item (SSOT) — */
+  .sidebar-nav-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: left;
+    border: 1px solid transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--color-text-muted);
+  }
+
+  .sidebar-nav-item:hover {
+    color: var(--color-text);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .sidebar-nav-item svg {
+    color: inherit;
+    transition: transform 0.2s ease;
+  }
+
+  .sidebar-nav-item:hover svg {
+    transform: scale(1.05);
+  }
+
+  .sidebar-nav-item.active {
+    color: var(--color-primary);
+    background-color: oklch(0.59 0.20 290 / 0.1);
+    border-color: oklch(0.59 0.20 290 / 0.2);
+    box-shadow: var(--shadow-glow-whisper);
+    font-weight: 700;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .animate-pulse-glow,
+    .animate-scroll-x,
+    .animate-flame,
+    .reveal.visible {
+      animation: none;
+    }
+  }
+}

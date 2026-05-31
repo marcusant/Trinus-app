@@ -1,0 +1,133 @@
+/**
+ * ⚠️ REGRA DE CAMADA — CAMADA 3 (rota)
+ * Proibido:
+ *   - Hardcoded oklch/hex/rgb
+ *   - box-shadow inline
+ *   - border-radius em pixels
+ */
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-[#0a0a0a] text-[#f5f0eb] font-sans overflow-x-hidden">
+
+      {/* ── NAV ── */}
+      <nav className="
+        fixed top-0 left-0 right-0 z-[100]
+        flex items-center justify-between
+        px-16 py-[1.4rem]
+        bg-[rgba(10,10,10,0.85)] backdrop-blur-[14px]
+        border-b border-[rgba(255,255,255,0.07)]
+        max-md:px-6
+      ">
+        <a href="#" className="font-serif text-[1.35rem] font-semibold tracking-[.08em] text-[#f5f0eb] no-underline">
+          Marcus <span className="text-[#c8a96e]">PT</span>
+        </a>
+
+        <span className="text-[0.65rem] tracking-[.22em] uppercase text-[rgba(245,240,235,0.45)] max-md:hidden">
+          Personal Training
+        </span>
+
+        <div className="flex gap-4 items-center">
+          <a href="/login" className="btn-ghost">Login</a>
+        </div>
+      </nav>
+
+      {/* ── HERO ── */}
+      <section className="
+        min-h-screen flex flex-col items-center justify-center text-center
+        pt-32 pb-24 px-8 relative overflow-hidden
+      ">
+        <div className="
+          absolute inset-0 pointer-events-none
+          bg-[radial-gradient(ellipse_60%_55%_at_50%_40%,rgba(200,169,110,0.06)_0%,transparent_70%)]
+        " />
+
+        <p className="text-[0.65rem] tracking-[.3em] uppercase text-[#c8a96e] mb-[1.8rem]">
+          Personal Training
+        </p>
+
+        <h1 className="
+          font-serif font-light leading-none tracking-[-0.01em]
+          text-[#f5f0eb] mb-[1.6rem]
+          text-[clamp(4.5rem,12vw,9rem)]
+        ">
+          Marcus <span className="text-[#c8a96e] font-semibold">PT</span>
+        </h1>
+
+        <p className="
+          text-[clamp(0.9rem,2vw,1.05rem)] text-[rgba(245,240,235,0.45)]
+          max-w-[480px] mx-auto mb-12 font-light tracking-[.02em]
+        ">
+          Transforma o teu corpo e mente com treino personalizado
+        </p>
+
+        <div className="flex gap-4 justify-center flex-wrap max-sm:flex-col max-sm:items-center">
+          <a href="#metodologia" className="btn-primary btn-lg">
+            Conhecer a Metodologia
+          </a>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 flex flex-col items-center gap-2">
+          <div className="w-[1px] h-12 bg-gradient-to-b from-[#c8a96e] to-transparent animate-[scrollPulse_2s_ease-in-out_infinite]" />
+          <span className="text-[0.6rem] tracking-[.2em] uppercase text-[rgba(245,240,235,0.45)]">
+            Scroll
+          </span>
+        </div>
+      </section>
+
+      {/* ... Resto do arquivo mantido ... */}
+      <section className="py-28 px-8 text-center relative">
+        <span className="font-serif text-[6rem] leading-none text-[#c8a96e] opacity-30 block mb-4">&ldquo;</span>
+        <p className="font-serif font-light text-[clamp(1.4rem,3.5vw,2.1rem)] text-[#f5f0eb] max-w-[720px] mx-auto leading-[1.5]">
+          Um corpo que move com <span className="text-[#c8a96e]">intenção</span> e uma mente que vive com <span className="text-[#c8a96e]">consciência</span>. Isso é saúde real.
+        </p>
+      </section>
+
+      <hr className="border-0 h-[1px] bg-[rgba(255,255,255,0.07)]" />
+
+      <section id="metodologia" className="py-24 px-8 max-w-[1100px] mx-auto">
+        <p className="eyebrow text-center mb-4">Metodologia</p>
+        <h2 className="font-serif font-light text-center text-[#f5f0eb] mb-16 text-[clamp(1.8rem,4vw,2.8rem)]">Três pilares. Uma transformação.</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-[1.5px] bg-[rgba(255,255,255,0.07)] border border-[rgba(255,255,255,0.07)] rounded-[4px] overflow-hidden">
+          <div className="pillar">
+            <div className="w-11 h-11 flex items-center justify-center bg-[rgba(200,169,110,0.12)] rounded-[3px] text-[#c8a96e]"><svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path d="M6.5 6.5h11M6 12h12M8 17.5h8M12 3v18" /></svg></div>
+            <span className="text-[0.62rem] tracking-[.22em] uppercase text-[#c8a96e]">01 — Corpo</span>
+            <h3 className="font-serif text-[1.45rem] font-normal text-[#f5f0eb] leading-[1.2]">Corpo Funcional</h3>
+            <p className="text-[0.85rem] text-[rgba(245,240,235,0.45)] leading-[1.75]">Mover-se bem, durar mais. Treino orientado para performance real no quotidiano.</p>
+          </div>
+          <div className="pillar">
+            <div className="w-11 h-11 flex items-center justify-center bg-[rgba(200,169,110,0.12)] rounded-[3px] text-[#c8a96e]"><svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path d="M9.5 2a6.5 6.5 0 1 1 5 10.5M9.5 2A6.5 6.5 0 0 0 3 8.5c0 3.6 2.9 6.5 6.5 6.5" /><circle cx="15" cy="17" r="5" /><path d="M15 14v3l2 1" /></svg></div>
+            <span className="text-[0.62rem] tracking-[.22em] uppercase text-[#c8a96e]">02 — Mente</span>
+            <h3 className="font-serif text-[1.45rem] font-normal text-[#f5f0eb] leading-[1.2]">Mente Consciente</h3>
+            <p className="text-[0.85rem] text-[rgba(245,240,235,0.45)] leading-[1.75]">Conhecer-se para transformar-se. Autoconhecimento e foco.</p>
+          </div>
+          <div className="pillar">
+            <div className="w-11 h-11 flex items-center justify-center bg-[rgba(200,169,110,0.12)] rounded-[3px] text-[#c8a96e]"><svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" /><circle cx="12" cy="12" r="9" /></svg></div>
+            <span className="text-[0.62rem] tracking-[.22em] uppercase text-[#c8a96e]">03 — Hábitos</span>
+            <h3 className="font-serif text-[1.45rem] font-normal text-[#f5f0eb] leading-[1.2]">Hábitos de Vida</h3>
+            <p className="text-[0.85rem] text-[rgba(245,240,235,0.45)] leading-[1.75]">Consistência que sustenta resultados. Sistemas de rotina integrais.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-8 bg-[#111111] border-t border-b border-[rgba(255,255,255,0.07)] text-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 max-w-[900px] mx-auto gap-12">
+          {[{ n: "100%", l: "Treino Personalizado" }, { n: "3", l: "Pilares" }, { n: "1", l: "Foco" }, { n: "∞", l: "Impacto" }].map((s) => (
+            <div key={s.l}>
+              <div className="font-serif text-[3.5rem] font-light text-[#c8a96e] leading-none mb-[0.4rem]">{s.n}</div>
+              <div className="text-[0.72rem] tracking-[.18em] uppercase text-[rgba(245,240,235,0.45)]">{s.l}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <footer className="py-10 px-16 max-md:px-6 border-t border-[rgba(255,255,255,0.07)] flex items-center justify-between flex-wrap gap-4">
+        <div className="font-serif text-[1.1rem]">Marcus <span className="text-[#c8a96e]">PT</span></div>
+        <span className="text-[0.65rem] tracking-[.22em] uppercase text-[#c8a96e]">Integra Marcus</span>
+        <span className="text-[0.72rem] text-[rgba(245,240,235,0.45)]">© 2026 — Todos os direitos reservados</span>
+      </footer>
+
+    </main>
+  );
+}
