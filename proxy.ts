@@ -67,7 +67,11 @@ export async function proxy(request: NextRequest) {
       if (!perfil) {
         console.warn('⚠️ Sessão inconsistente ou órfã detectada no banco ativo. Efetuando logout...')
         await supabase.auth.signOut()
-        return NextResponse.redirect(new URL('/login?error=session_inconsistent', request.url))
+        
+        if (isProtectedPath) {
+          return NextResponse.redirect(new URL('/login?error=session_inconsistent', request.url))
+        }
+        return response
       }
 
       const role = perfil.role || 'client'
