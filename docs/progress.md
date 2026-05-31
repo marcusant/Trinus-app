@@ -70,7 +70,7 @@
 - [x] Substituídas todas as cores e estilos hardcoded (`#c8a96e`, dourados do pt-app legado, etc.) por tokens nativos do Tailwind v4 (`primary`, `success`, `destructive`, `card`, `border`, `input`, etc.), unificando o visual com o tema premium **Preto Absoluto + Violeta Místico** da TRINUS-APP.
 - [x] Compilação validada com sucesso (`npm run build` — 0 erros Next.js/TypeScript).
 
-### Transição de Marca para TRINUS-APP e Conexão GitHub (31/05/2026)
+### Transição de Marca, Conexão GitHub e Validação de Conectividade Supabase (31/05/2026)
 - [x] Mapeamento e renomeação global de todas as referências textuais e estruturais de `INTEGRA-APP` / `INTEGRA` para `TRINUS-APP` / `TRINUS`.
   - [x] Ajustado o nome técnico no `package.json` para `"name": "trinus-app"`.
   - [x] Atualizadas todas as documentações e referências em `README.md` e pasta `docs/`.
@@ -84,6 +84,10 @@
   - [x] Adicionados e commitados todos os arquivos de arquitetura premium locais (`feat: init TRINUS-APP...`).
   - [x] Executado o pull e merge inteligente com o histórico remoto (`-X ours`) para reter o README.md detalhado local.
   - [x] Efetuado push completo com sucesso para a branch `main` do repositório remoto (`git push -u origin main`).
+- [x] Validação de Conexão com o Supabase concluída com sucesso:
+  - [x] Verificado o arquivo `.env.local` contendo as variáveis `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+  - [x] Verificados os arquivos de inicialização do cliente browser e do servidor Next.js SSR (`lib/supabase/client.ts` e `lib/supabase/server.ts`).
+  - [x] Executado script de handshake e diagnóstico de banco de dados (`node scripts/test-supabase.js`) que validou o status de 15 tabelas vitais para a aplicação.
 - [x] Validação de build final com Turbopack executada com sucesso (`npm run build` — 100% livre de erros).
 
 ---

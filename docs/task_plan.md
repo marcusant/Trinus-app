@@ -19,7 +19,7 @@ Construir a plataforma TRINUS-APP (Next.js App Router + Supabase) com Landing Pa
 - [ ] Configurar Tailwind e Design System
 
 ### ⚡ Fase 2: Link
-- [ ] Validar `.env` e conexões de API
+- [x] Validar `.env` e conexões de API
 - [ ] Scripts de handshake em `tools/`
 
 ### ⚙️ Fase 3: Arquitetura
