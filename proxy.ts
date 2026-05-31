@@ -64,8 +64,14 @@ export async function proxy(request: NextRequest) {
         .eq('id', user.id)
         .single()
 
-      const role = perfil?.role || 'client'
-      const onboardingCompleto = !!perfil?.full_name
+      if (!perfil) {
+        console.warn('⚠️ Sessão inconsistente ou órfã detectada no banco ativo. Efetuando logout...')
+        await supabase.auth.signOut()
+        return NextResponse.redirect(new URL('/login?error=session_inconsistent', request.url))
+      }
+
+      const role = perfil.role || 'client'
+      const onboardingCompleto = !!perfil.full_name
 
       if (isAuthPath) {
         if (role === 'admin') {

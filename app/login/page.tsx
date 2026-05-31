@@ -48,6 +48,10 @@ function LoginContent() {
       toast.error("A autenticação falhou.", {
         description: "Tente novamente ou contacte o suporte.",
       })
+    } else if (urlError === "session_inconsistent") {
+      toast.info("A sua sessão anterior foi limpa com sucesso.", {
+        description: "Inicie sessão novamente com as novas credenciais do TRINUS-APP.",
+      })
     }
   }, [urlError])
 
