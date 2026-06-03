@@ -45,7 +45,7 @@ export function ClientHeader({
       {/* Desktop Header (visible on xl+) */}
       <header className="hidden xl:block px-8 pt-8 pb-4 mx-auto w-full max-w-5xl">
         <div className="flex items-center justify-between">
-          <BrandLogo variant="full" className="h-9 w-auto" />
+          <BrandLogo variant="trident" className="h-9 w-auto" />
 
           {/* Quick status pill */}
           <div className="flex items-center gap-2.5 bg-card/40 border border-white/5 px-3 py-1.5 rounded-full backdrop-blur-md">

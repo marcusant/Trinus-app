@@ -8,6 +8,7 @@ import {
   Sparkles,
   CheckCircle,
   ChevronDown,
+  ChevronLeft,
   Loader2,
   Play,
   Check,
@@ -146,10 +147,35 @@ export function TreinosTab({
     )
   }
 
+  // Dia selecionado: mostra apenas esse dia (esconde os outros).
+  const visibleDays = selectedDayId ? planDays.filter(d => d.id === selectedDayId) : planDays
+
+  // Dia ativo a decorrer → tela dedicada (estilo Hevy): sem cabeçalho de plano
+  // nem lista de dias, apenas estatísticas + exercícios (a barra do topo trata
+  // do tempo / relógio / Concluir).
+  const activeDay = isTimerRunning && activeWorkoutDayId
+    ? planDays.find(d => d.id === activeWorkoutDayId) ?? null
+    : null
+
   return (
     <div className="space-y-4">
-      {/* Plano ativo + dias de treino */}
-      {activePlan ? (
+      {activeDay ? (
+        <ActiveWorkoutView
+          day={activeDay}
+          dayExercises={dayExercises}
+          previousSets={previousSets}
+          workoutLogs={workoutLogs}
+          isExercisesLoading={isExercisesLoading}
+          timerSeconds={timerSeconds}
+          fmt={fmt}
+          updateSet={updateSet}
+          toggleSet={toggleSet}
+          addSet={addSet}
+          removeSet={removeSet}
+          startRest={startRest}
+          onEditPse={(exId, setIdx) => setPseEdit({ exId, setIdx })}
+        />
+      ) : activePlan ? (
         <>
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
@@ -161,11 +187,21 @@ export function TreinosTab({
             </span>
           </div>
 
+          {/* Voltar à lista de treinos (quando um dia está selecionado) */}
+          {selectedDayId && (
+            <button
+              type="button"
+              onClick={() => setSelectedDayId(null)}
+              className="flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground transition cursor-pointer"
+            >
+              <ChevronLeft className="h-3.5 w-3.5" /> Ver todos os treinos
+            </button>
+          )}
+
           <div className="space-y-2">
-            {planDays.map(day => {
+            {visibleDays.map(day => {
               const done = sessions.some(s => s.workout_day_id === day.id)
               const isOpen = selectedDayId === day.id
-              const isActive = isTimerRunning && activeWorkoutDayId === day.id
               return (
                 <div key={day.id}>
                   <div
@@ -184,124 +220,23 @@ export function TreinosTab({
                     <ChevronDown className={`h-4 w-4 text-muted-foreground transition shrink-0 ${isOpen ? "rotate-180" : ""}`} />
                   </div>
 
-                  {/* Exercícios do dia selecionado */}
+                  {/* Exercícios do dia selecionado (preview + iniciar) */}
                   {isOpen && (
                     <div className="mt-2 space-y-2 animate-in slide-in-from-top-1 duration-200">
-                      {/* Ação primária */}
                       {done ? (
                         <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-success bg-success/10 border border-success/15 py-2.5 rounded-xl">
                           <CheckCircle className="h-3.5 w-3.5" /> Treino concluído
                         </div>
-                      ) : isActive ? null : (
+                      ) : (
                         <Button size="sm" className="w-full bg-primary hover:brightness-110 text-primary-foreground text-xs font-bold cursor-pointer" onClick={() => handleStartWorkout(day.id)} disabled={isTimerRunning || isExercisesLoading}>
                           <Play className="h-3.5 w-3.5 mr-1.5 fill-current" /> Iniciar treino
                         </Button>
                       )}
 
-                      {/* Loading / vazio partilhado */}
                       {isExercisesLoading ? (
                         <div className="rounded-2xl border border-white/5 bg-card/40 py-6 flex justify-center text-muted-foreground gap-2 text-xs shadow-glow-whisper"><Loader2 className="h-4 w-4 animate-spin text-primary" /> Carregando...</div>
                       ) : dayExercises.length === 0 ? (
                         <div className="rounded-2xl border border-white/5 bg-card/40 text-center py-6 text-xs text-muted-foreground shadow-glow-whisper">Nenhum exercício prescrito.</div>
-                      ) : isActive ? (
-                        /* ── Modo de registo (Hevy): SÉRIE · ANTERIOR · KG · REPS · PSE · ✓ ── */
-                        <>
-                          <WorkoutStats workoutLogs={workoutLogs} dayExercises={dayExercises} timerSeconds={timerSeconds} fmt={fmt} />
-                          <div className="space-y-2">
-                            {dayExercises.map(ex => {
-                              const sets = workoutLogs[ex.id] ?? []
-                              const prev = previousSets[ex.id] ?? []
-                              return (
-                                <div key={ex.id} className="rounded-2xl border border-white/5 bg-card/40 p-3 shadow-glow-whisper">
-                                  <div className="flex items-center justify-between gap-2 mb-1">
-                                    <span className="text-sm font-bold text-primary truncate">{ex.exercise_name}</span>
-                                  </div>
-                                  {ex.rest_seconds != null && (
-                                    <button
-                                      type="button"
-                                      onClick={() => startRest(ex.rest_seconds)}
-                                      className="flex items-center gap-1.5 text-[11px] font-semibold text-primary/80 hover:text-primary mb-2 cursor-pointer transition"
-                                    >
-                                      <Timer className="h-3 w-3" /> Descanso: {fmtRestLabel(ex.rest_seconds)}
-                                    </button>
-                                  )}
-
-                                  {/* Cabeçalho de colunas */}
-                                  <div className="flex items-center gap-1.5 px-1 pb-1.5">
-                                    <span className="w-8 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Série</span>
-                                    <span className="w-16 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Anterior</span>
-                                    <span className="flex-1 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Kg</span>
-                                    <span className="flex-1 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Reps</span>
-                                    <span className="w-11 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">PSE</span>
-                                    <span className="w-9 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">✓</span>
-                                  </div>
-
-                                  {/* Linhas de série editáveis */}
-                                  <div className="space-y-1.5">
-                                    {sets.map((s, i) => {
-                                      const p = prev[i]
-                                      const prevLabel = p && (p.load_kg != null || p.reps_done != null)
-                                        ? `${p.load_kg ?? "—"}kg×${p.reps_done ?? "—"}`
-                                        : "—"
-                                      return (
-                                        <div key={i} className={`flex items-center gap-1.5 rounded-lg px-1 py-1 transition ${s.completed ? "bg-success/10" : ""}`}>
-                                          <span className="w-8 text-center text-xs font-bold text-foreground tabular-nums">{i + 1}</span>
-                                          <span className="w-16 text-center text-[11px] text-muted-foreground tabular-nums truncate">{prevLabel}</span>
-                                          <input
-                                            inputMode="decimal"
-                                            value={s.load_kg}
-                                            onChange={e => updateSet(ex.id, i, "load_kg", e.target.value)}
-                                            placeholder={ex.load_kg != null ? String(ex.load_kg) : "—"}
-                                            className="flex-1 min-w-0 bg-black/30 border border-white/5 rounded-lg px-1 py-2 text-center text-sm text-foreground placeholder-zinc-600 focus:outline-none focus:border-primary/50 transition tabular-nums"
-                                          />
-                                          <input
-                                            inputMode="numeric"
-                                            value={s.reps_done}
-                                            onChange={e => updateSet(ex.id, i, "reps_done", e.target.value)}
-                                            placeholder={ex.reps || "—"}
-                                            className="flex-1 min-w-0 bg-black/30 border border-white/5 rounded-lg px-1 py-2 text-center text-sm text-foreground placeholder-zinc-600 focus:outline-none focus:border-primary/50 transition tabular-nums"
-                                          />
-                                          <button
-                                            type="button"
-                                            onClick={() => setPseEdit({ exId: ex.id, setIdx: i })}
-                                            aria-label="Registar PSE"
-                                            className={`w-11 h-9 shrink-0 rounded-lg flex items-center justify-center text-[11px] font-bold border transition cursor-pointer tabular-nums ${s.rpe != null ? "bg-primary/15 border-primary/40 text-primary" : "bg-black/30 border-white/10 text-muted-foreground hover:border-primary/40"}`}
-                                          >
-                                            {s.rpe != null ? s.rpe : "PSE"}
-                                          </button>
-                                          <button
-                                            type="button"
-                                            onClick={() => {
-                                              // Auto-inicia o descanso ao concluir (não ao desmarcar).
-                                              if (!s.completed && ex.rest_seconds != null) startRest(ex.rest_seconds)
-                                              toggleSet(ex.id, i)
-                                            }}
-                                            aria-label={s.completed ? "Série concluída" : "Marcar série como concluída"}
-                                            className={`w-9 h-9 shrink-0 rounded-lg flex items-center justify-center border transition cursor-pointer ${s.completed ? "bg-success border-success text-success-foreground" : "bg-black/30 border-white/10 text-muted-foreground hover:border-success/40"}`}
-                                          >
-                                            <Check className="h-4 w-4" />
-                                          </button>
-                                        </div>
-                                      )
-                                    })}
-                                  </div>
-
-                                  {/* Adicionar / remover série */}
-                                  <div className="flex items-center gap-2 mt-2">
-                                    <button type="button" onClick={() => addSet(ex.id)} className="flex-1 flex items-center justify-center gap-1 text-[11px] font-bold text-muted-foreground hover:text-primary bg-white/5 hover:bg-white/10 rounded-lg py-1.5 transition cursor-pointer">
-                                      <Plus className="h-3.5 w-3.5" /> Adicionar Série
-                                    </button>
-                                    {sets.length > 1 && (
-                                      <button type="button" onClick={() => removeSet(ex.id, sets.length - 1)} aria-label="Remover última série" className="flex items-center justify-center text-[11px] font-bold text-muted-foreground hover:text-destructive bg-white/5 hover:bg-white/10 rounded-lg py-1.5 px-3 transition cursor-pointer">
-                                        <Minus className="h-3.5 w-3.5" />
-                                      </button>
-                                    )}
-                                  </div>
-                                </div>
-                              )
-                            })}
-                          </div>
-                        </>
                       ) : (
                         /* ── Preview da prescrição (read-only): Exercício · Série · Kg · Reps · Desc ── */
                         <div className="rounded-2xl border border-white/5 bg-card/40 py-2 shadow-glow-whisper">
@@ -359,6 +294,155 @@ export function TreinosTab({
         onConfirm={v => { if (pseEdit) setRpe(pseEdit.exId, pseEdit.setIdx, v) }}
         onClose={() => setPseEdit(null)}
       />
+    </div>
+  )
+}
+
+/**
+ * Tela dedicada de treino ativo (estilo Hevy): título do dia, estatísticas em
+ * direto e registo de séries. Sem cabeçalho de plano nem lista de dias.
+ */
+function ActiveWorkoutView({
+  day,
+  dayExercises,
+  previousSets,
+  workoutLogs,
+  isExercisesLoading,
+  timerSeconds,
+  fmt,
+  updateSet,
+  toggleSet,
+  addSet,
+  removeSet,
+  startRest,
+  onEditPse,
+}: {
+  day: WorkoutDay
+  dayExercises: WorkoutExercise[]
+  previousSets: PreviousSets
+  workoutLogs: WorkoutLogs
+  isExercisesLoading: boolean
+  timerSeconds: number
+  fmt: (s: number) => string
+  updateSet: (exId: string, setIdx: number, field: "reps_done" | "load_kg", value: string) => void
+  toggleSet: (exId: string, setIdx: number) => void
+  addSet: (exId: string) => void
+  removeSet: (exId: string, setIdx: number) => void
+  startRest: (seconds?: number | null) => void
+  onEditPse: (exId: string, setIdx: number) => void
+}) {
+  return (
+    <div className="space-y-3 animate-in fade-in duration-300">
+      {/* Título do treino em curso */}
+      <div className="min-w-0">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-primary block">Treino em curso</span>
+        <h2 className="text-lg font-black text-foreground truncate">{day.name || `Dia ${day.day_number}`}</h2>
+        {day.focus && <span className="text-xs text-muted-foreground truncate block">{day.focus}</span>}
+      </div>
+
+      {isExercisesLoading ? (
+        <div className="rounded-2xl border border-white/5 bg-card/40 py-6 flex justify-center text-muted-foreground gap-2 text-xs shadow-glow-whisper"><Loader2 className="h-4 w-4 animate-spin text-primary" /> Carregando...</div>
+      ) : dayExercises.length === 0 ? (
+        <div className="rounded-2xl border border-white/5 bg-card/40 text-center py-6 text-xs text-muted-foreground shadow-glow-whisper">Nenhum exercício prescrito.</div>
+      ) : (
+        <>
+          <WorkoutStats workoutLogs={workoutLogs} dayExercises={dayExercises} timerSeconds={timerSeconds} fmt={fmt} />
+          <div className="space-y-2">
+            {dayExercises.map(ex => {
+              const sets = workoutLogs[ex.id] ?? []
+              const prev = previousSets[ex.id] ?? []
+              return (
+                <div key={ex.id} className="rounded-2xl border border-white/5 bg-card/40 p-3 shadow-glow-whisper">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-sm font-bold text-primary truncate">{ex.exercise_name}</span>
+                  </div>
+                  {ex.rest_seconds != null && (
+                    <button
+                      type="button"
+                      onClick={() => startRest(ex.rest_seconds)}
+                      className="flex items-center gap-1.5 text-[11px] font-semibold text-primary/80 hover:text-primary mb-2 cursor-pointer transition"
+                    >
+                      <Timer className="h-3 w-3" /> Descanso: {fmtRestLabel(ex.rest_seconds)}
+                    </button>
+                  )}
+
+                  {/* Cabeçalho de colunas */}
+                  <div className="flex items-center gap-1.5 px-1 pb-1.5">
+                    <span className="w-8 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Série</span>
+                    <span className="w-16 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Anterior</span>
+                    <span className="flex-1 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Kg</span>
+                    <span className="flex-1 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Reps</span>
+                    <span className="w-11 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">PSE</span>
+                    <span className="w-9 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">✓</span>
+                  </div>
+
+                  {/* Linhas de série editáveis */}
+                  <div className="space-y-1.5">
+                    {sets.map((s, i) => {
+                      const p = prev[i]
+                      const prevLabel = p && (p.load_kg != null || p.reps_done != null)
+                        ? `${p.load_kg ?? "—"}kg×${p.reps_done ?? "—"}`
+                        : "—"
+                      return (
+                        <div key={i} className={`flex items-center gap-1.5 rounded-lg px-1 py-1 transition ${s.completed ? "bg-success/10" : ""}`}>
+                          <span className="w-8 text-center text-xs font-bold text-foreground tabular-nums">{i + 1}</span>
+                          <span className="w-16 text-center text-[11px] text-muted-foreground tabular-nums truncate">{prevLabel}</span>
+                          <input
+                            inputMode="decimal"
+                            value={s.load_kg}
+                            onChange={e => updateSet(ex.id, i, "load_kg", e.target.value)}
+                            placeholder={ex.load_kg != null ? String(ex.load_kg) : "—"}
+                            className="flex-1 min-w-0 bg-black/30 border border-white/5 rounded-lg px-1 py-2 text-center text-sm text-foreground placeholder-zinc-600 focus:outline-none focus:border-primary/50 transition tabular-nums"
+                          />
+                          <input
+                            inputMode="numeric"
+                            value={s.reps_done}
+                            onChange={e => updateSet(ex.id, i, "reps_done", e.target.value)}
+                            placeholder={ex.reps || "—"}
+                            className="flex-1 min-w-0 bg-black/30 border border-white/5 rounded-lg px-1 py-2 text-center text-sm text-foreground placeholder-zinc-600 focus:outline-none focus:border-primary/50 transition tabular-nums"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => onEditPse(ex.id, i)}
+                            aria-label="Registar PSE"
+                            className={`w-11 h-9 shrink-0 rounded-lg flex items-center justify-center text-[11px] font-bold border transition cursor-pointer tabular-nums ${s.rpe != null ? "bg-primary/15 border-primary/40 text-primary" : "bg-black/30 border-white/10 text-muted-foreground hover:border-primary/40"}`}
+                          >
+                            {s.rpe != null ? s.rpe : "PSE"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              // Auto-inicia o descanso ao concluir (não ao desmarcar).
+                              if (!s.completed && ex.rest_seconds != null) startRest(ex.rest_seconds)
+                              toggleSet(ex.id, i)
+                            }}
+                            aria-label={s.completed ? "Série concluída" : "Marcar série como concluída"}
+                            className={`w-9 h-9 shrink-0 rounded-lg flex items-center justify-center border transition cursor-pointer ${s.completed ? "bg-success border-success text-success-foreground" : "bg-black/30 border-white/10 text-muted-foreground hover:border-success/40"}`}
+                          >
+                            <Check className="h-4 w-4" />
+                          </button>
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* Adicionar / remover série */}
+                  <div className="flex items-center gap-2 mt-2">
+                    <button type="button" onClick={() => addSet(ex.id)} className="flex-1 flex items-center justify-center gap-1 text-[11px] font-bold text-muted-foreground hover:text-primary bg-white/5 hover:bg-white/10 rounded-lg py-1.5 transition cursor-pointer">
+                      <Plus className="h-3.5 w-3.5" /> Adicionar Série
+                    </button>
+                    {sets.length > 1 && (
+                      <button type="button" onClick={() => removeSet(ex.id, sets.length - 1)} aria-label="Remover última série" className="flex items-center justify-center text-[11px] font-bold text-muted-foreground hover:text-destructive bg-white/5 hover:bg-white/10 rounded-lg py-1.5 px-3 transition cursor-pointer">
+                        <Minus className="h-3.5 w-3.5" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </>
+      )}
     </div>
   )
 }

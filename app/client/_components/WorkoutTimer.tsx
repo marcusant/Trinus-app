@@ -2,7 +2,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Timer, Clock, Check, Loader2 } from "lucide-react"
+import { Timer, Check, Loader2 } from "lucide-react"
+import { TimerMenu } from "./TimerMenu"
 
 interface WorkoutTimerProps {
   isTimerRunning: boolean
@@ -37,16 +38,9 @@ export function WorkoutTimer({
           <span className="text-lg font-black leading-none tabular-nums text-foreground">{fmt(timerSeconds)}</span>
         </div>
 
-        {/* Ações: relógio (descanso) + Concluir */}
+        {/* Ações: relógio (temporizador + cronómetro) + Concluir */}
         <div className="flex shrink-0 items-center gap-2">
-          <button
-            type="button"
-            onClick={() => startRest()}
-            aria-label="Iniciar descanso"
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border border-white/10 bg-white/5 text-foreground transition hover:bg-white/10"
-          >
-            <Clock className="h-4 w-4" />
-          </button>
+          <TimerMenu startRest={startRest} />
           <Button
             size="sm"
             onClick={handleFinishWorkout}
