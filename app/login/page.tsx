@@ -37,7 +37,9 @@ function LoginContentComponent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
-  const nextRedirect = searchParams.get("next") ?? "/"
+  // Sanitização anti open-redirect (L-2): só caminhos internos absolutos.
+  const rawNext = searchParams.get("next") ?? "/"
+  const nextRedirect = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/"
   const urlError = searchParams.get("error")
 
   useEffect(() => {

@@ -21,7 +21,7 @@ export function StepMotivacao({
       
       <div>
         <label className="block text-sm text-muted-foreground mb-2">
-          Qual a tua motivação principal?
+          Qual a tua motivação principal? <span className="text-destructive font-medium">*</span>
         </label>
         <textarea
           value={formData.motivacao_principal ?? ''}

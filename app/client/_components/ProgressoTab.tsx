@@ -6,10 +6,14 @@ import { TimelineAchievements } from "@/components/ui/timeline-achievements"
 import {
   Calendar,
   NotebookPen,
-  Loader2,
   CheckCircle,
   Plus,
   Weight,
+  Dumbbell,
+  Flame,
+  Award,
+  FileText,
+  Clock,
 } from "lucide-react"
 import type { WorkoutSession, Assessment, CheckIn } from "../_types/client.types"
 
@@ -19,6 +23,8 @@ interface ProgressoTabProps {
   assessments: Assessment[]
   memberSince: string
   xp: number
+  totalMin: number
+  currentStreak: number
   isPending: boolean
   setShowCheckInModal: (v: boolean) => void
 }
@@ -29,11 +35,37 @@ export function ProgressoTab({
   assessments,
   memberSince,
   xp,
+  totalMin,
+  currentStreak,
   isPending,
   setShowCheckInModal,
 }: ProgressoTabProps) {
+  void isPending
+  const pendingCount = assessments.filter(a => a.status !== "done").length
+
+  const kpis = [
+    { icon: <Dumbbell className="h-4 w-4 text-primary" />, label: "Treinos", value: sessions.length, sub: `${totalMin} min totais` },
+    { icon: <Flame className="h-4 w-4 text-primary" />, label: "Sequência", value: currentStreak, sub: currentStreak > 0 ? "Dias seguidos 🔥" : "Inicie hoje" },
+    { icon: <Award className="h-4 w-4 text-primary" />, label: "XP Total", value: xp, sub: "Pontos acumulados" },
+    { icon: <FileText className="h-4 w-4 text-primary" />, label: "Avaliações", value: pendingCount, sub: "Pendentes" },
+  ]
+
   return (
     <div className="space-y-4">
+      {/* KPIs — métricas de evolução (relocadas do dashboard) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {kpis.map((kpi, i) => (
+          <div key={i} className="rounded-2xl border border-white/5 bg-card/30 p-4 backdrop-blur-sm shadow-glow-whisper border-l-primary border-l-[3px]">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider">{kpi.label}</span>
+              {kpi.icon}
+            </div>
+            <span className="text-2xl font-black text-foreground tabular-nums">{kpi.value}</span>
+            <span className="text-[11px] text-muted-foreground block">{kpi.sub}</span>
+          </div>
+        ))}
+      </div>
+
       {/* Gamificação: Timeline de Conquistas */}
       <TimelineAchievements
         sessions={sessions}
@@ -41,6 +73,28 @@ export function ProgressoTab({
         memberSince={memberSince}
         currentXP={xp}
       />
+
+      {/* Histórico de Treinos (relocado da página de Treino) */}
+      <div className="rounded-2xl border border-white/5 bg-card/40 p-4 backdrop-blur-md shadow-glow-whisper">
+        <h3 className="font-bold text-sm text-foreground flex items-center gap-2 mb-4">
+          <Dumbbell className="h-4 w-4 text-primary" /> Histórico de Treinos
+        </h3>
+        <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1">
+          {sessions.length === 0 ? (
+            <div className="text-center py-6 text-xs text-muted-foreground bg-black/20 rounded-xl border border-white/5">Sem sessões registadas.</div>
+          ) : sessions.map(s => (
+            <div key={s.id} className="flex items-center justify-between p-2.5 bg-black/30 border border-white/5 rounded-xl">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-3.5 w-3.5 text-success" />
+                <span className="text-xs text-foreground font-medium">{new Date(s.started_at).toLocaleDateString('pt-PT')}</span>
+              </div>
+              <span className="text-xs text-muted-foreground bg-black/40 px-2.5 py-1 rounded-full flex items-center gap-1">
+                <Clock className="h-3 w-3" />{Math.round(s.duration_seconds / 60)}min
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Check-ins */}
       <div className="rounded-2xl border border-white/5 bg-card/40 p-4 backdrop-blur-md shadow-glow-whisper">

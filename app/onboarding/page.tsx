@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { Loader2, ArrowLeft, ArrowRight, Check } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
+import { BrandLogo } from "@/components/ui/brand-logo"
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(1)
@@ -122,6 +123,9 @@ export default function OnboardingPage() {
         <div className="absolute bottom-1/4 right-1/4 -z-10 w-[50vw] h-[50vh] opacity-25 blur-[120px]" style={{ background: "radial-gradient(circle, var(--color-primary) 0%, transparent 70%)" }} />
 
         <div className="w-full max-w-[500px] rounded-3xl border border-white/5 bg-card/40 backdrop-blur-2xl p-10 text-center shadow-glow-whisper relative animate-in zoom-in-95 duration-500">
+          <div className="flex justify-center mb-6">
+            <BrandLogo variant="full" className="h-8 w-auto transition-transform duration-300 hover:scale-[1.02]" />
+          </div>
           {celebrationStep === 1 ? (
             <div className="space-y-6 py-6 flex flex-col items-center">
               <Loader2 className="h-12 w-12 text-primary animate-spin mb-2" />
@@ -154,6 +158,9 @@ export default function OnboardingPage() {
       <div className="absolute bottom-0 left-0 -z-10 w-[40vw] h-[40vh] opacity-10 blur-[100px]" style={{ background: "radial-gradient(circle, var(--color-primary) 0%, transparent 70%)" }} />
 
       <div className="w-full max-w-[580px] rounded-3xl border border-white/5 bg-card/40 backdrop-blur-2xl p-8 sm:p-10 shadow-glow-whisper">
+        <div className="flex justify-center mb-8">
+          <BrandLogo variant="full" className="h-9 w-auto transition-transform duration-300 hover:scale-[1.02]" />
+        </div>
 
         {/* Barra de Progresso Dinâmica */}
         <div className="mb-10 select-none">

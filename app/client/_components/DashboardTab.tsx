@@ -1,29 +1,20 @@
 // app/client/_components/DashboardTab.tsx
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { XPBar } from "@/components/ui/xp-bar"
-import { StreakCard } from "@/components/ui/streak-card"
 import {
   Dumbbell,
-  Sparkles,
   CheckCircle,
   ChevronRight,
-  TrendingUp,
   FileText,
   Flame,
-  Target,
-  Activity,
   Weight,
-  Apple,
+  Play,
+  ArrowRight,
 } from "lucide-react"
+import Link from "next/link"
 import { AnamneseProgressivaWidget } from "./AnamneseProgressivaWidget"
-import type {
-  WorkoutPlan,
-  WorkoutDay,
-  Assessment,
-  LevelInfo,
-} from "../_types/client.types"
+import type { WorkoutPlan, WorkoutDay, LevelInfo } from "../_types/client.types"
 
 interface WeekDay {
   label: string
@@ -39,53 +30,49 @@ interface Habit {
   icon: string
 }
 
+interface ProgressiveQuestion {
+  key: string
+  label: string
+  question: string
+  placeholder?: string
+  type: string
+  options?: string[]
+}
+
 interface DashboardTabProps {
-  // XP / Gamification
+  // XP / Gamification (slim)
   xp: number
   userLevel: LevelInfo & { nextLevelXP: number }
   currentStreak: number
-  bestStreak: number
 
-  // Onboarding / Anamnese Progressiva
+  // Setup slot (onboarding / anamnese / pergunta progressiva)
   hasOnboarding: boolean
+  hasAnamnese: boolean
   progressiveProgress: number
   progressiveLogs: Record<string, unknown>[]
   totalQuestions: number
-  nextProgressiveQuestion: {
-    key: string
-    label: string
-    question: string
-    placeholder?: string
-    type: string
-    options?: string[]
-  } | undefined
+  nextProgressiveQuestion: ProgressiveQuestion | undefined
   questionValue: string
   setQuestionValue: (v: string) => void
   isSubmittingQuestion: boolean
   handleProgressiveSubmit: (e: React.FormEvent) => void
   onGoToOnboarding: () => void
 
-  // Plan / Sessions
+  // Treino de Hoje
   activePlan: WorkoutPlan | null
   planDays: WorkoutDay[]
-  sessions: { id: string; started_at: string; duration_seconds: number }[]
-  totalMin: number
 
-  // Habits
+  // Hábitos
   habits: Habit[]
   completedHabits: number
   habitPct: number
   toggleHabit: (id: string, force?: boolean) => void
 
-  // Weekly tracker
+  // Esta Semana
   weekDays: WeekDay[]
   weekCompleted: number
 
-  // Assessments
-  pendingAssessments: Assessment[]
-  doneAssessments: Assessment[]
-
-  // Navigation
+  // Navigation / actions
   setActiveTab: (tab: "dashboard" | "treino" | "alimentacao" | "progresso" | "perfil") => void
   setSelectedDayId: (id: string | null) => void
   setShowCheckInModal: (v: boolean) => void
@@ -95,8 +82,8 @@ export function DashboardTab({
   xp,
   userLevel,
   currentStreak,
-  bestStreak,
   hasOnboarding,
+  hasAnamnese,
   progressiveProgress,
   progressiveLogs,
   totalQuestions,
@@ -108,26 +95,86 @@ export function DashboardTab({
   onGoToOnboarding,
   activePlan,
   planDays,
-  sessions,
-  totalMin,
   habits,
   completedHabits,
   habitPct,
   toggleHabit,
   weekDays,
   weekCompleted,
-  pendingAssessments,
-  doneAssessments,
   setActiveTab,
   setSelectedDayId,
   setShowCheckInModal,
 }: DashboardTabProps) {
-  const streak = currentStreak
+  // ── Slot único de setup (prioridade: onboarding → anamnese → pergunta progressiva) ──
+  const setupSlot = (() => {
+    if (!hasOnboarding) {
+      return (
+        <AnamneseProgressivaWidget
+          hasOnboarding={false}
+          progressiveProgress={progressiveProgress}
+          progressiveLogs={progressiveLogs}
+          totalQuestions={totalQuestions}
+          nextProgressiveQuestion={nextProgressiveQuestion}
+          questionValue={questionValue}
+          setQuestionValue={setQuestionValue}
+          isSubmittingQuestion={isSubmittingQuestion}
+          handleProgressiveSubmit={handleProgressiveSubmit}
+          onGoToOnboarding={onGoToOnboarding}
+        />
+      )
+    }
+    if (!hasAnamnese) {
+      return (
+        <Link
+          href="/client/anamnese"
+          className="block rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/10 via-background/40 to-primary/5 p-5 backdrop-blur-md shadow-glow-whisper hover:border-primary/40 transition group"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                <FileText className="h-5 w-5 text-primary" />
+              </div>
+              <div className="space-y-0.5">
+                <h4 className="font-extrabold text-sm text-foreground">Anamnese Completa</h4>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Responde à avaliação detalhada (saúde, medidas, alimentação e treino) para um plano à tua medida.
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="h-5 w-5 text-primary shrink-0" />
+          </div>
+        </Link>
+      )
+    }
+    if (nextProgressiveQuestion) {
+      return (
+        <AnamneseProgressivaWidget
+          hasOnboarding={true}
+          progressiveProgress={progressiveProgress}
+          progressiveLogs={progressiveLogs}
+          totalQuestions={totalQuestions}
+          nextProgressiveQuestion={nextProgressiveQuestion}
+          questionValue={questionValue}
+          setQuestionValue={setQuestionValue}
+          isSubmittingQuestion={isSubmittingQuestion}
+          handleProgressiveSubmit={handleProgressiveSubmit}
+          onGoToOnboarding={onGoToOnboarding}
+        />
+      )
+    }
+    return null
+  })()
+
+  const todayDay = planDays[0] ?? null
+  const startToday = () => {
+    setActiveTab("treino")
+    if (todayDay) setSelectedDayId(todayDay.id)
+  }
 
   return (
     <div className="space-y-6">
 
-      {/* Gamificação: Barra de XP */}
+      {/* 1. Header slim — Barra de XP fina (sem tabela de patentes; vive no Perfil) */}
       <XPBar
         currentXP={xp}
         levelName={userLevel.name}
@@ -135,243 +182,138 @@ export function DashboardTab({
         levelColor={userLevel.color}
         minXP={userLevel.minXP}
         nextLevelXP={userLevel.nextLevelXP}
+        showLevels={false}
       />
 
-      {/* Anamnese Progressiva / Onboarding Banner */}
-      <AnamneseProgressivaWidget
-        hasOnboarding={hasOnboarding}
-        progressiveProgress={progressiveProgress}
-        progressiveLogs={progressiveLogs}
-        totalQuestions={totalQuestions}
-        nextProgressiveQuestion={nextProgressiveQuestion}
-        questionValue={questionValue}
-        setQuestionValue={setQuestionValue}
-        isSubmittingQuestion={isSubmittingQuestion}
-        handleProgressiveSubmit={handleProgressiveSubmit}
-        onGoToOnboarding={onGoToOnboarding}
-      />
+      {/* 2. Slot único de setup (condicional, 1 de cada vez) */}
+      {setupSlot}
 
-      {/* Premium Quick Actions Widget */}
-      <div className="rounded-2xl border border-white/5 bg-card/40 p-5 backdrop-blur-md shadow-glow-whisper">
-        <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider block mb-3">Ações Rápidas do Aluno</span>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {/* Action 1: Iniciar Treino */}
-          {activePlan && planDays.length > 0 ? (
-            <button
-              onClick={() => {
-                setActiveTab("treino");
-                if (planDays[0]) setSelectedDayId(planDays[0].id);
-              }}
-              className="flex flex-col items-center justify-center p-4 rounded-xl bg-primary/5 border border-primary/20 hover:border-primary/50 transition cursor-pointer text-center group"
-            >
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-                <Dumbbell className="h-5 w-5 text-primary" />
+      {/* 3. 🏋️ Treino de Hoje (card herói) */}
+      {activePlan && todayDay ? (
+        <div className="rounded-2xl border border-primary/25 bg-gradient-to-br from-primary/15 via-card/50 to-primary/5 p-6 backdrop-blur-md shadow-glow relative overflow-hidden">
+          <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
+          <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+            <div className="flex items-start gap-4 min-w-0">
+              <div className="w-14 h-14 rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center shrink-0">
+                <Dumbbell className="h-7 w-7 text-primary" />
               </div>
-              <span className="text-xs font-bold text-foreground">Iniciar Treino</span>
-              <span className="text-[9px] text-muted-foreground mt-0.5">Treino de Hoje</span>
-            </button>
-          ) : (
-            <button
-              onClick={() => setActiveTab("treino")}
-              className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition cursor-pointer text-center group"
-            >
-              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-                <Dumbbell className="h-5 w-5 text-muted-foreground" />
+              <div className="min-w-0 space-y-1">
+                <span className="text-[11px] font-bold text-primary uppercase tracking-wider block">Treino de Hoje</span>
+                <h2 className="text-lg sm:text-xl font-black text-foreground truncate">
+                  {todayDay.name || activePlan.name}
+                </h2>
+                <span className="text-xs text-muted-foreground block">
+                  {todayDay.focus ? `${todayDay.focus} · ` : ""}{activePlan.name} · {planDays.length} {planDays.length === 1 ? "dia" : "dias"}
+                </span>
               </div>
-              <span className="text-xs font-bold text-foreground">Meus Treinos</span>
-              <span className="text-[9px] text-muted-foreground mt-0.5">Sem plano ativo</span>
+            </div>
+            <button
+              onClick={startToday}
+              className="shrink-0 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground font-extrabold text-sm shadow-glow hover:brightness-110 active:scale-[0.98] transition cursor-pointer"
+            >
+              <Play className="h-4 w-4 fill-current" />
+              Iniciar Treino
             </button>
-          )}
-
-          {/* Action 2: Registar Peso */}
-          <button
-            onClick={() => setShowCheckInModal(true)}
-            className="flex flex-col items-center justify-center p-4 rounded-xl bg-primary/5 border border-primary/20 hover:border-primary/50 transition cursor-pointer text-center group"
-          >
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-              <Weight className="h-5 w-5 text-primary" />
-            </div>
-            <span className="text-xs font-bold text-foreground">Registar Peso</span>
-            <span className="text-[9px] text-muted-foreground mt-0.5">Check-in diário</span>
-          </button>
-
-          {/* Action 3: Ver Dieta */}
-          <button
-            onClick={() => setActiveTab("alimentacao")}
-            className="flex flex-col items-center justify-center p-4 rounded-xl bg-primary/5 border border-primary/20 hover:border-primary/50 transition cursor-pointer text-center group"
-          >
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-              <Apple className="h-5 w-5 text-primary" />
-            </div>
-            <span className="text-xs font-bold text-foreground">Ver Dieta</span>
-            <span className="text-[9px] text-muted-foreground mt-0.5">Refeições de Hoje</span>
-          </button>
-
-          {/* Action 4: Progresso/Medidas */}
-          <button
-            onClick={() => setActiveTab("progresso")}
-            className="flex flex-col items-center justify-center p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 hover:border-amber-500/50 transition cursor-pointer text-center group"
-          >
-            <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-              <TrendingUp className="h-5 w-5 text-amber-500" />
-            </div>
-            <span className="text-xs font-bold text-foreground">Avaliações</span>
-            <span className="text-[9px] text-muted-foreground mt-0.5">Evolução Física</span>
-          </button>
+          </div>
         </div>
-      </div>
-
-      {/* Bento Grid Layout (Desktop: 3 columns; Mobile: 1 column stack) */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-
-        {/* Column 1 & 2: Main Activity Widgets (xl:col-span-2) */}
-        <div className="xl:col-span-2 space-y-6">
-
-          {/* Weekly Tracker */}
-          <div className="rounded-2xl border border-white/5 bg-card/40 p-5 backdrop-blur-md shadow-glow-whisper">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-                <TrendingUp className="h-5 w-5 text-primary" />
+      ) : (
+        <button
+          onClick={() => setActiveTab("treino")}
+          className="w-full text-left rounded-2xl border border-white/5 bg-card/40 p-6 backdrop-blur-md shadow-glow-whisper hover:border-primary/30 transition group cursor-pointer"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center shrink-0">
+                <Dumbbell className="h-7 w-7 text-muted-foreground" />
               </div>
               <div>
-                <h3 className="font-bold text-sm text-foreground">Esta Semana</h3>
-                <span className="text-[11px] text-muted-foreground">{weekCompleted} de 7 dias concluídos</span>
+                <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider block">Treino de Hoje</span>
+                <h2 className="text-base font-black text-foreground">Sem plano ativo</h2>
+                <span className="text-xs text-muted-foreground block mt-0.5">O teu treinador ainda não prescreveu um plano.</span>
               </div>
             </div>
-            <div className="grid grid-cols-7 gap-2">
-              {weekDays.map((d, i) => (
-                <div key={i} className="flex flex-col items-center gap-1.5">
-                  <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 flex items-center justify-center transition-all ${d.done
-                    ? "bg-primary border-primary text-primary-foreground"
-                    : d.isToday
-                      ? "border-primary/50 bg-primary/5 text-primary"
-                      : "border-white/10 bg-black/30 text-zinc-600"
-                    }`}>
-                    {d.done ? <CheckCircle className="h-4 w-4" /> : <span className="text-[10px] font-bold">{d.label}</span>}
-                  </div>
-                  <span className={`text-[9px] font-semibold ${d.isToday ? "text-primary" : "text-muted-foreground"}`}>{d.label}</span>
-                </div>
-              ))}
-            </div>
+            <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0 group-hover:text-primary transition-colors" />
           </div>
+        </button>
+      )}
 
-          {/* KPIs - 2x2 grid */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-2xl border border-white/5 bg-card/30 p-4 backdrop-blur-sm shadow-glow-whisper border-l-primary border-l-[3px]">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Treinos</span>
-                <Dumbbell className="h-4 w-4 text-primary" />
-              </div>
-              <span className="text-2xl font-black text-foreground">{sessions.length}</span>
-              <span className="text-[9px] text-muted-foreground block">{totalMin} min totais</span>
-            </div>
+      {/* 4. Hoje — Check-in rápido + Hábitos */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-            <div className="rounded-2xl border border-white/5 bg-card/30 p-4 backdrop-blur-sm shadow-glow-whisper border-l-primary border-l-[3px]">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Sequência</span>
-                <Flame className="h-4 w-4 text-primary" />
-              </div>
-              <span className="text-2xl font-black text-foreground">{streak}</span>
-              <span className="text-[9px] text-muted-foreground block">{streak > 0 ? "Dias seguidos 🔥" : "Inicie hoje"}</span>
-            </div>
-
-            <div className="rounded-2xl border border-white/5 bg-card/30 p-4 backdrop-blur-sm shadow-glow-whisper border-l-primary border-l-[3px]">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Hábitos</span>
-                <Activity className="h-4 w-4 text-primary" />
-              </div>
-              <span className="text-2xl font-black text-foreground">{habitPct}%</span>
-              <span className="text-[9px] text-muted-foreground block">{completedHabits}/{habits.length} hoje</span>
-            </div>
-
-            <div className="rounded-2xl border border-white/5 bg-card/30 p-4 backdrop-blur-sm shadow-glow-whisper border-l-primary border-l-[3px]">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">Avaliações</span>
-                <FileText className="h-4 w-4 text-primary" />
-              </div>
-              <span className="text-2xl font-black text-foreground">{pendingAssessments.length}</span>
-              <span className="text-[9px] text-muted-foreground block">pendentes</span>
-            </div>
+        {/* Check-in rápido */}
+        <button
+          onClick={() => setShowCheckInModal(true)}
+          className="text-left rounded-2xl border border-white/5 bg-card/40 p-5 backdrop-blur-md shadow-glow-whisper hover:border-primary/30 transition group cursor-pointer flex items-center gap-4"
+        >
+          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+            <Weight className="h-6 w-6 text-primary" />
           </div>
+          <div className="min-w-0">
+            <span className="font-bold text-sm text-foreground block">Check-in de Hoje</span>
+            <span className="text-xs text-muted-foreground block">Regista peso, humor e energia</span>
+          </div>
+          <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto shrink-0 group-hover:text-primary transition-colors" />
+        </button>
 
-          {/* Active plan shortcut */}
-          {activePlan && (
-            <button onClick={() => setActiveTab("treino")} className="w-full text-left rounded-2xl border border-white/5 bg-card/40 p-4 backdrop-blur-sm shadow-glow-whisper hover:border-primary/30 transition cursor-pointer block">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Target className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-sm text-foreground block">{activePlan.name}</span>
-                    <span className="text-[10px] text-muted-foreground">{planDays.length} dias de treino · Plano ativo</span>
-                  </div>
+        {/* Hábitos de Hoje */}
+        <div className="rounded-2xl border border-white/5 bg-card/40 p-5 backdrop-blur-md shadow-glow-whisper">
+          <div className="flex items-center justify-between mb-3">
+            <span className="font-bold text-sm text-foreground">Hábitos de Hoje</span>
+            <span className="text-xs text-primary font-bold bg-primary/10 px-2 py-0.5 rounded-full">{completedHabits}/{habits.length} · {habitPct}%</span>
+          </div>
+          <div className="space-y-2">
+            {habits.map(h => (
+              <div key={h.id} onClick={() => toggleHabit(h.id)} className={`flex items-center justify-between px-3 py-2 rounded-xl cursor-pointer transition-all ${h.done ? "bg-primary/5 border border-primary/20" : "bg-black/30 border border-white/5 hover:bg-white/5"}`}>
+                <div className="flex items-center gap-2.5">
+                  <span className="text-sm">{h.icon}</span>
+                  <span className={`text-xs font-medium ${h.done ? "line-through text-muted-foreground" : "text-foreground"}`}>{h.label}</span>
                 </div>
-                <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center border-2 transition-all ${h.done ? "bg-primary border-primary" : "border-zinc-600"}`}>
+                  {h.done && <CheckCircle className="h-3 w-3 text-background" />}
+                </div>
               </div>
-            </button>
-          )}
-
-          {/* Motivational quote */}
-          <div className="rounded-2xl border border-white/5 bg-card/40 p-4 backdrop-blur-sm">
-            <div className="flex items-start gap-3">
-              <Sparkles className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-              <p className="text-xs italic text-muted-foreground leading-relaxed">
-                &quot;A disciplina é o maior ato de amor-próprio que podes praticar. Transforma o esforço em hábito.&quot;
-              </p>
-            </div>
+            ))}
           </div>
         </div>
-
-        {/* Column 3: Habits & Side Cards (lg:col-span-1) */}
-        <div className="space-y-6">
-          {/* Gamificação: Streak Card */}
-          <StreakCard currentStreak={currentStreak} bestStreak={bestStreak} />
-
-          {/* Habits today checklist */}
-          <div className="rounded-2xl border border-white/5 bg-card/40 p-4 backdrop-blur-sm shadow-glow-whisper">
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-bold text-sm text-foreground">Hábitos de Hoje</span>
-              <span className="text-[10px] text-primary font-bold bg-primary/10 px-2 py-0.5 rounded-full">{habitPct}%</span>
-            </div>
-            <div className="space-y-2">
-              {habits.map(h => (
-                <div key={h.id} onClick={() => toggleHabit(h.id)} className={`flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer transition-all ${h.done ? "bg-primary/5 border border-primary/20" : "bg-black/30 border border-white/5 hover:bg-white/5"}`}>
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-sm">{h.icon}</span>
-                    <span className={`text-xs font-medium ${h.done ? "line-through text-muted-foreground" : "text-foreground"}`}>{h.label}</span>
-                  </div>
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center border-2 transition-all ${h.done ? "bg-primary border-primary" : "border-zinc-600"}`}>
-                    {h.done && <CheckCircle className="h-3 w-3 text-background" />}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Physical Assessments Preview Card */}
-          <div className="rounded-2xl border border-white/5 bg-card/40 p-4 backdrop-blur-sm shadow-glow-whisper">
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-bold text-sm text-foreground">Última Avaliação</span>
-              <button onClick={() => setActiveTab("progresso")} className="text-[10px] text-primary hover:underline font-bold">Ver Todas</button>
-            </div>
-            {doneAssessments.length > 0 ? (
-              <div className="p-3 bg-black/30 border border-white/5 rounded-xl">
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="font-bold text-[10px] text-foreground">{new Date(doneAssessments[0].scheduled_at).toLocaleDateString('pt-PT')}</span>
-                  <span className="text-[8px] px-1.5 py-0.5 rounded-full font-bold uppercase text-[#25D366] bg-[#25D366]/10">Concluída</span>
-                </div>
-                {doneAssessments[0].notes && <p className="text-[10px] text-muted-foreground italic line-clamp-2">{doneAssessments[0].notes}</p>}
-              </div>
-            ) : (
-              <div className="text-center py-6 text-xs text-muted-foreground bg-black/20 rounded-xl border border-white/5">
-                Nenhuma avaliação concluída até o momento.
-              </div>
-            )}
-          </div>
-        </div>
-
       </div>
+
+      {/* 5. 🔥 Esta Semana — tracker 7 dias + streak inline */}
+      <div className="rounded-2xl border border-white/5 bg-card/40 p-5 backdrop-blur-md shadow-glow-whisper">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="font-bold text-sm text-foreground">Esta Semana</h3>
+            <span className="text-xs text-muted-foreground">{weekCompleted} de 7 dias concluídos</span>
+          </div>
+          <span className="flex items-center gap-1.5 text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-full">
+            <Flame className="h-4 w-4" />
+            {currentStreak} {currentStreak === 1 ? "dia" : "dias"} de sequência
+          </span>
+        </div>
+        <div className="grid grid-cols-7 gap-2">
+          {weekDays.map((d, i) => (
+            <div key={i} className="flex flex-col items-center gap-1.5">
+              <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full border-2 flex items-center justify-center transition-all ${d.done
+                ? "bg-primary border-primary text-primary-foreground"
+                : d.isToday
+                  ? "border-primary/50 bg-primary/5 text-primary"
+                  : "border-white/10 bg-black/30 text-zinc-600"
+                }`}>
+                {d.done ? <CheckCircle className="h-4 w-4" /> : <span className="text-xs font-bold">{d.label}</span>}
+              </div>
+              <span className={`text-[11px] font-semibold ${d.isToday ? "text-primary" : "text-muted-foreground"}`}>{d.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 6. → Ver progresso completo (link discreto) */}
+      <button
+        onClick={() => setActiveTab("progresso")}
+        className="w-full flex items-center justify-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-primary transition-colors py-2 cursor-pointer"
+      >
+        Ver progresso completo
+        <ArrowRight className="h-3.5 w-3.5" />
+      </button>
     </div>
   )
 }

@@ -32,14 +32,14 @@
   /* Cinza fosco de apoio */
 
   /* Marca - Neon Violeta/Azul */
-  --color-primary: oklch(0.59 0.20 290);
+  --color-primary: var(--brand-purple);
   /* Roxo Neon Vibrante */
   --color-primary-foreground: #d1d1d6;
   /* Texto branco no botão ao invés de preto para maior contraste visual */
   --color-secondary: #121212;
   /* Fundo secundário sutil */
   --color-secondary-foreground: #d1d1d6;
-  --color-accent: oklch(0.68 0.16 290);
+  --color-accent: var(--brand-purple-soft);
   /* Violeta mais claro */
   --color-accent-foreground: #d1d1d6;
 
@@ -48,7 +48,7 @@
   /* Laranja Eletrizante */
   --color-pillar-mind: oklch(0.75 0.22 155);
   /* Verde Esmeralda Neon */
-  --color-pillar-essence: oklch(0.59 0.20 290);
+  --color-pillar-essence: var(--brand-purple);
   /* Roxo Neon Vibrante */
 
   /* Semânticas */
@@ -60,25 +60,31 @@
   --color-warning: oklch(0.8 0.2 80);
   --color-warning-foreground: #000000;
 
+  /* Landing page — cores específicas */
+  --color-whatsapp:     #25D366;
+  --color-surface-deep: #121212;
+  --color-surface-card: #0c0c0c;
+  --color-urgency-bar:  var(--brand-purple);
+
   /* Bordas e interação */
   --color-border: rgba(255, 255, 255, 0.08);
   --color-input: rgba(255, 255, 255, 0.06);
-  --color-ring: oklch(0.59 0.20 290);
+  --color-ring: var(--brand-purple);
 
   /* Sidebar */
   --color-sidebar: #121212;
   --color-sidebar-foreground: #d1d1d6;
-  --color-sidebar-primary: oklch(0.59 0.20 290);
+  --color-sidebar-primary: var(--brand-purple);
   --color-sidebar-primary-foreground: #000000;
   --color-sidebar-accent: #1c1c1e;
   --color-sidebar-accent-foreground: #d1d1d6;
   --color-sidebar-border: rgba(255, 255, 255, 0.05);
-  --color-sidebar-ring: oklch(0.59 0.20 290);
+  --color-sidebar-ring: var(--brand-purple);
 
   /* Charts */
-  --color-chart-1: oklch(0.59 0.20 290);
+  --color-chart-1: var(--brand-purple);
   --color-chart-2: oklch(0.55 0.18 285);
-  --color-chart-3: oklch(0.68 0.16 290);
+  --color-chart-3: var(--brand-purple-soft);
   --color-chart-4: oklch(0.78 0.16 160);
   --color-chart-5: oklch(0.6 0.18 25);
 
@@ -105,13 +111,20 @@
    Alphas, gradients, shadows, CTA âmbar
    ───────────────────────────────────────────── */
 :root {
+  /* ════════ FONTE ÚNICA DO ROXO DA MARCA ════════
+     Esta é a cor da barra de urgência no topo da landing.
+     TODO roxo da app deriva daqui. Mudar aqui → muda em toda a app. */
+  --brand-purple: #715FDB;          /* periwinkle/lavanda — a barra do topo */
+  --brand-purple-rgb: 113, 95, 219; /* para alphas e sombras */
+  --brand-purple-soft: #8d7ce6;     /* tom mais claro — accent / hover */
+
   /* — Superfície elevada (reservada para modais e drawers do dashboard) — */
   --surface-elevated: #242428;
   --surface-elevated-foreground: #d1d1d6;
 
   --footer: #060608;
-  --primary-hover: oklch(0.64 0.18 290);
-  --primary-hover-label: oklch(0.69 0.15 290);
+  --primary-hover: var(--brand-purple-soft);
+  --primary-hover-label: var(--brand-purple-soft);
 
   /* — Escala tipográfica — */
   --text-hero: clamp(2.5rem, 5vw, 3.25rem);
@@ -134,31 +147,31 @@
   --container-narrow: 48rem;
   /* 768px */
 
-  /* Alphas - Ajustados para o tom de roxo rico (baseados em #8340f0) */
-  --primary-alpha-4: rgba(131, 64, 240, 0.04);
-  --primary-alpha-8: rgba(131, 64, 240, 0.08);
-  --primary-alpha-12: rgba(131, 64, 240, 0.12);
-  --primary-alpha-15: rgba(131, 64, 240, 0.15);
-  --primary-alpha-22: rgba(131, 64, 240, 0.22);
-  --primary-alpha-30: rgba(131, 64, 240, 0.30);
-  --primary-alpha-40: rgba(131, 64, 240, 0.40);
-  --primary-alpha-55: rgba(131, 64, 240, 0.55);
+  /* Alphas - derivados de --brand-purple (#715FDB, a barra do topo) */
+  --primary-alpha-4: rgba(var(--brand-purple-rgb), 0.04);
+  --primary-alpha-8: rgba(var(--brand-purple-rgb), 0.08);
+  --primary-alpha-12: rgba(var(--brand-purple-rgb), 0.12);
+  --primary-alpha-15: rgba(var(--brand-purple-rgb), 0.15);
+  --primary-alpha-22: rgba(var(--brand-purple-rgb), 0.22);
+  --primary-alpha-30: rgba(var(--brand-purple-rgb), 0.30);
+  --primary-alpha-40: rgba(var(--brand-purple-rgb), 0.40);
+  --primary-alpha-55: rgba(var(--brand-purple-rgb), 0.55);
 
   /* Shadows STEALTH -> MATTE ELEGANT (Unificado e livre de halos ofuscantes) */
-  --shadow-glow: 0 0 0 1px rgba(131, 64, 240, 0.25), 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-glow-strong: 0 0 0 1px rgba(131, 64, 240, 0.45), 0 4px 16px rgba(0, 0, 0, 0.45);
-  --shadow-glow-whisper: 0 0 0 1px rgba(131, 64, 240, 0.15);
-  --shadow-glow-active: 0 0 0 1px rgba(131, 64, 240, 0.4), 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 0 1px rgba(var(--brand-purple-rgb), 0.25), 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-glow-strong: 0 0 0 1px rgba(var(--brand-purple-rgb), 0.45), 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-glow-whisper: 0 0 0 1px rgba(var(--brand-purple-rgb), 0.15);
+  --shadow-glow-active: 0 0 0 1px rgba(var(--brand-purple-rgb), 0.4), 0 4px 20px rgba(0, 0, 0, 0.5);
   --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(244, 244, 245, 0.05) inset;
   /* Vidro refletivo e sombra funda */
 
   /* Gradientes */
-  --gradient-urgency: linear-gradient(90deg, oklch(0.59 0.20 290), oklch(0.50 0.18 260));
+  --gradient-urgency: linear-gradient(90deg, var(--brand-purple), oklch(0.50 0.18 260));
   /* Gradiente roxo-azul */
   --gradient-cta-section: linear-gradient(180deg, #121214, #1c1c1f);
   --gradient-card-hover: linear-gradient(180deg, rgba(42, 42, 46, 0.8), rgba(28, 28, 31, 0.6));
   --gradient-hero-ambient:
-    radial-gradient(ellipse 60% 60% at 20% 10%, oklch(0.59 0.20 290 / 0.22), transparent 70%),
+    radial-gradient(ellipse 60% 60% at 20% 10%, rgba(var(--brand-purple-rgb), 0.22), transparent 70%),
     radial-gradient(ellipse 70% 60% at 80% 80%, oklch(0.75 0.22 45 / 0.15), transparent 70%),
     radial-gradient(ellipse 40% 50% at 50% 50%, oklch(0.75 0.22 155 / 0.1), transparent 60%);
 
@@ -185,6 +198,30 @@
   --level-gold: #FFD700;
   --level-platinum: #E5E4E2;
   --level-diamond: #B9F2FF;
+
+  /* — Humor (mood selector) — */
+  --color-mood-1: oklch(0.60 0.25 25);
+  /* Difícil  — vermelho */
+  --color-mood-2: oklch(0.80 0.20 80);
+  /* Neutro   — âmbar */
+  --color-mood-3: oklch(0.75 0.22 155);
+  /* Bom      — verde */
+  --color-mood-4: oklch(0.65 0.18 250);
+  /* Ótimo    — azul */
+  --color-mood-5: var(--brand-purple);
+  /* Incrível — violeta (primary) */
+
+  /* — Chama de Sequência (streak flame) — */
+  --color-flame-cold: oklch(0.45 0.00 0);
+  /* 0 dias   — cinza frio */
+  --color-flame-low: oklch(0.65 0.00 0);
+  /* 1-2 dias — cinza claro */
+  --color-flame-warm: oklch(0.80 0.20 80);
+  /* 3-6 dias — âmbar */
+  --color-flame-hot: oklch(0.75 0.22 45);
+  /* 7-13 dias — laranja */
+  --color-flame-max: oklch(0.60 0.25 25);
+  /* 14+ dias — vermelho */
 }
 
 /* ─────────────────────────────────────────────
@@ -429,7 +466,7 @@
     padding: 0.625rem 1rem;
     border-radius: 0.75rem;
     cursor: pointer;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 600;
     text-align: left;
     border: 1px solid transparent;
@@ -453,8 +490,8 @@
 
   .sidebar-nav-item.active {
     color: var(--color-primary);
-    background-color: oklch(0.59 0.20 290 / 0.1);
-    border-color: oklch(0.59 0.20 290 / 0.2);
+    background-color: rgba(var(--brand-purple-rgb), 0.1);
+    border-color: rgba(var(--brand-purple-rgb), 0.2);
     box-shadow: var(--shadow-glow-whisper);
     font-weight: 700;
   }

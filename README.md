@@ -8,7 +8,7 @@ Este é o projeto principal do **Trinus**, migrado para a stack moderna do Next.
 - **Linguagem:** TypeScript
 - **Estilização:** Tailwind CSS v4
 - **Componentes:** Radix UI / shadcn/ui
-- **Animações:** Framer Motion & CSS customizado
+- **Animações:** CSS customizado (keyframes em `app/globals.css`)
 - **Banco de Dados & Auth:** Supabase (SSR)
 - **Integrações de IA:** Gemini AI API (via SDK oficial)
 
@@ -34,9 +34,9 @@ Para garantir que a aplicação se mantenha profissional, de alta performance e 
 
 1. **Cores do Tema (CSS Variables)**:
    * Nenhuma cor deve ser definida de forma estática nas páginas (evitar classes como `bg-[#121212]` ou `text-[#8340f0]`).
-   * Todas as cores são mapeadas em `:root` no [globals.css](file:///c:/dev/INTEGRA-APP/app/globals.css) e consumidas semântica e automaticamente via utilidades do Tailwind CSS v4 (ex: `bg-background`, `text-primary`, `border-card`).
+   * Todas as cores são mapeadas em `:root` no [globals.css](file:///c:/dev/TRINUS-APP/app/globals.css) e consumidas semântica e automaticamente via utilidades do Tailwind CSS v4 (ex: `bg-background`, `text-primary`, `border-card`).
 2. **Componentes Universais**:
-   * Elementos de interface comuns (como botões `<Button>`, inputs, avatars) devem ser importados exclusivamente da pasta `components/ui/` (ex: [button.tsx](file:///c:/dev/INTEGRA-APP/components/ui/button.tsx)).
+   * Elementos de interface comuns (como botões `<Button>`, inputs, avatars) devem ser importados exclusivamente da pasta `components/ui/` (ex: [button.tsx](file:///c:/dev/TRINUS-APP/components/ui/button.tsx)).
 3. **Menus Laterais e Layouts de Painel**:
    * Qualquer barra lateral, caixa de perfil ou navegação repetida em painéis (`/client`, `/trainer`, `/admin`) **DEVE** utilizar as classes SSOT do CSS global:
      * `.sidebar-container` $\rightarrow$ Para a estrutura visual Aside e backgrounds translúcidos.
@@ -49,4 +49,4 @@ Para garantir que a aplicação se mantenha profissional, de alta performance e 
 
 ## 📖 Regras para IA
 
-Veja o arquivo [AGENTS.md](file:///c:/dev/INTEGRA-APP/AGENTS.md) na raiz do projeto para entender as diretrizes de arquitetura, segurança e boas práticas exigidas pelos agentes autônomos que dão manutenção ao código. Todas as criações e edições de código devem obedecer a este manifesto.
+Veja o arquivo [AGENTS.md](file:///c:/dev/TRINUS-APP/AGENTS.md) na raiz do projeto para entender as diretrizes de arquitetura, segurança e boas práticas exigidas pelos agentes autônomos que dão manutenção ao código. Todas as criações e edições de código devem obedecer a este manifesto.

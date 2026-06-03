@@ -42,3 +42,29 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local debug screenshots (root-level)
+/*.png
+
+# ad-hoc debug scripts
+/scripts/diagnose-schema.js
+/scripts/test-interactions.js
+/scripts/test-login-content.js
+/scripts/test-login-page.js
+/scripts/test-navigation.js
+/scripts/test-navigation-debug.js
+
+# unused logo experiments (only public/trinus_final.png and public/logo_clean_v3.png are used)
+/logo/
+/public/composite_test.png
+/public/logo.png
+/public/logo_center_v2.png
+/public/logo_clean_v2.png
+/public/logo_nus.png
+/public/logo_nus_v2.png
+/public/logo_tri.png
+/public/logo_tri_v2.png
+
+# local editor / agent config
+/.claude/
+/.vscode/

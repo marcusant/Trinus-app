@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button"
 import { Loader2, LogOut, LayoutGrid, Dumbbell, Apple, TrendingUp, User } from "lucide-react"
 import type { TabKey } from "../_types/client.types"
+import { BrandLogo } from "@/components/ui/brand-logo"
 
 interface ClientSidebarProps {
   userName: string
@@ -34,14 +35,7 @@ export function ClientSidebar({
     <aside className="sidebar-container">
       <div>
         <div className="flex items-center gap-3 mb-8">
-          <svg viewBox="0 0 40 40" className="w-9 h-9 fill-none stroke-primary stroke-[1.8] transition-all duration-300 hover:scale-105 shrink-0">
-            <path d="M12 28V14L16 18L20 10L24 18L28 14V28" strokeLinejoin="round" strokeLinecap="round" />
-            <path d="M20 10V30" strokeLinecap="round" />
-            <circle cx="20" cy="30" r="1" fill="currentColor" />
-          </svg>
-          <div className="flex items-baseline gap-1">
-            <span className="font-black tracking-tight text-primary text-base">TRINUS</span>
-          </div>
+          <BrandLogo variant="full" className="h-8 w-auto transition-all duration-300 hover:scale-[1.02]" />
         </div>
 
         {/* Profile Card in Sidebar */}
@@ -50,8 +44,8 @@ export function ClientSidebar({
             {(userName || "A").substring(0, 2).toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
-            <span className="font-bold text-sm text-foreground block truncate">{userName}</span>
-            <span className="text-[10px] text-muted-foreground block truncate">{email}</span>
+            <span className="font-bold text-sm sm:text-base text-foreground block truncate">{userName}</span>
+            <span className="text-xs text-muted-foreground block truncate">{email}</span>
           </div>
         </div>
 

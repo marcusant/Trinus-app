@@ -15,6 +15,8 @@ import { ProgressoTab } from "./_components/ProgressoTab"
 import { PerfilTab } from "./_components/PerfilTab"
 import { CheckInModal } from "./_components/CheckInModal"
 import { WorkoutTimer } from "./_components/WorkoutTimer"
+import { RestTimerBar } from "./_components/RestTimerBar"
+import { WorkoutSummary } from "./_components/WorkoutSummary"
 import { BottomNav } from "./_components/BottomNav"
 
 export default function ClientDashboard() {
@@ -25,6 +27,7 @@ export default function ClientDashboard() {
     userName,
     profile,
     isLoading,
+    hasAnamnese,
     logoutLoading,
     isPending,
     activeTab,
@@ -33,6 +36,7 @@ export default function ClientDashboard() {
     activePlan,
     planDays,
     dayExercises,
+    previousSets,
     selectedDayId,
     setSelectedDayId,
     sessions,
@@ -51,6 +55,18 @@ export default function ClientDashboard() {
     isTimerRunning,
     timerSeconds,
     activeWorkoutDayId,
+    workoutLogs,
+    updateSet,
+    toggleSet,
+    setRpe,
+    addSet,
+    removeSet,
+    restIsResting,
+    restRemaining,
+    restTotal,
+    startRest,
+    addRestTime,
+    skipRest,
     showCheckInModal,
     setShowCheckInModal,
     checkInWeight,
@@ -66,21 +82,21 @@ export default function ClientDashboard() {
     toggleHabit,
     completedHabits,
     habitPct,
-    pendingAssessments,
-    doneAssessments,
     totalMin,
     hasOnboarding,
     weekDays,
     weekCompleted,
     currentStreak,
-    bestStreak,
     xp,
     userLevel,
     nextProgressiveQuestion,
     progressiveProgress,
     fmt,
     handleStartWorkout,
-    handleStopWorkout,
+    handleFinishWorkout,
+    workoutSummary,
+    handleSaveWorkout,
+    handleDiscardWorkout,
     handleCheckInSubmit,
     handleProgressiveSubmit,
     handleLogout,
@@ -125,7 +141,16 @@ export default function ClientDashboard() {
           timerSeconds={timerSeconds}
           isPending={isPending}
           fmt={fmt}
-          handleStopWorkout={handleStopWorkout}
+          handleFinishWorkout={handleFinishWorkout}
+        />
+
+        {/* Barra de descanso (contagem decrescente, estilo Hevy) */}
+        <RestTimerBar
+          isResting={restIsResting}
+          restRemaining={restRemaining}
+          restTotal={restTotal}
+          addRestTime={addRestTime}
+          skipRest={skipRest}
         />
 
         {/* Header (Mobile + Desktop) */}
@@ -145,8 +170,8 @@ export default function ClientDashboard() {
               xp={xp}
               userLevel={userLevel}
               currentStreak={currentStreak}
-              bestStreak={bestStreak}
               hasOnboarding={hasOnboarding}
+              hasAnamnese={hasAnamnese}
               progressiveProgress={progressiveProgress}
               progressiveLogs={progressiveLogs}
               totalQuestions={PROGRESSIVE_QUESTIONS.length}
@@ -158,16 +183,12 @@ export default function ClientDashboard() {
               onGoToOnboarding={() => router.push("/onboarding")}
               activePlan={activePlan}
               planDays={planDays}
-              sessions={sessions}
-              totalMin={totalMin}
               habits={habits}
               completedHabits={completedHabits}
               habitPct={habitPct}
               toggleHabit={toggleHabit}
               weekDays={weekDays}
               weekCompleted={weekCompleted}
-              pendingAssessments={pendingAssessments}
-              doneAssessments={doneAssessments}
               setActiveTab={setActiveTab}
               setSelectedDayId={setSelectedDayId}
               setShowCheckInModal={setShowCheckInModal}
@@ -183,6 +204,7 @@ export default function ClientDashboard() {
               selectedDayId={selectedDayId}
               setSelectedDayId={setSelectedDayId}
               dayExercises={dayExercises}
+              previousSets={previousSets}
               isExercisesLoading={isExercisesLoading}
               sessions={sessions}
               isTimerRunning={isTimerRunning}
@@ -191,7 +213,14 @@ export default function ClientDashboard() {
               isPending={isPending}
               fmt={fmt}
               handleStartWorkout={handleStartWorkout}
-              handleStopWorkout={handleStopWorkout}
+              handleFinishWorkout={handleFinishWorkout}
+              workoutLogs={workoutLogs}
+              updateSet={updateSet}
+              toggleSet={toggleSet}
+              setRpe={setRpe}
+              addSet={addSet}
+              removeSet={removeSet}
+              startRest={startRest}
             />
           )}
 
@@ -213,6 +242,8 @@ export default function ClientDashboard() {
               assessments={assessments}
               memberSince={profile?.created_at || ""}
               xp={xp}
+              totalMin={totalMin}
+              currentStreak={currentStreak}
               isPending={isPending}
               setShowCheckInModal={setShowCheckInModal}
             />
@@ -228,6 +259,7 @@ export default function ClientDashboard() {
               sessions={sessions}
               trainerName={trainerName}
               hasOnboarding={hasOnboarding}
+              hasAnamnese={hasAnamnese}
               onGoToOnboarding={() => router.push("/onboarding")}
             />
           )}
@@ -248,6 +280,19 @@ export default function ClientDashboard() {
           setCheckInEnergy={setCheckInEnergy}
           isPending={isPending}
           handleCheckInSubmit={handleCheckInSubmit}
+        />
+
+        {/* Ecrã de resumo do treino (estilo Hevy) */}
+        <WorkoutSummary
+          summary={workoutSummary}
+          defaultTitle={(() => {
+            const d = workoutSummary ? planDays.find(pd => pd.id === workoutSummary.dayId) : null
+            return d?.name || (d ? `Dia ${d.day_number}` : "Treino")
+          })()}
+          isPending={isPending}
+          fmt={fmt}
+          onSave={handleSaveWorkout}
+          onDiscard={handleDiscardWorkout}
         />
 
       </div>

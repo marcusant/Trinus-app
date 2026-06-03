@@ -24,7 +24,7 @@ export function StepSaude({
       
       <div>
         <label className="block text-sm text-muted-foreground mb-3">
-          Lesões anteriores
+          Lesões anteriores <span className="text-destructive font-medium">*</span>
         </label>
         <ChipSelector
           options={LESOES_COMUNS}
@@ -36,7 +36,7 @@ export function StepSaude({
 
       <div>
         <label className="block text-sm text-muted-foreground mb-3">
-          Dores atuais
+          Dores atuais <span className="text-destructive font-medium">*</span>
         </label>
         <ChipSelector
           options={DORES_COMUNS}

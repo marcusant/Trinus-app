@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import { saveAnamneseCompleta } from '@/lib/actions/anamnese'
 
 // Tipos e Constantes
 import { AnamneseData, AnamneseFormWizardProps } from './anamnese/types'
@@ -21,14 +21,12 @@ import { StepMotivacao } from './anamnese/steps/StepMotivacao'
 export function AnamneseFormWizard({ 
   perfilId, 
   alunoNome, 
-  modo, 
+  modo,
   dadosIniciais,
-  anamneseId,
-  redirectTo = '/alunos' 
+  redirectTo = '/alunos'
 }: AnamneseFormWizardProps) {
   const router = useRouter()
-  const supabase = createClient()
-  
+
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -102,130 +100,80 @@ export function AnamneseFormWizard({
     updateField(field, newArray as AnamneseData[typeof field])
   }
 
+  const validateStep = (step: number): string | null => {
+    switch (step) {
+      case 2: // Medidas
+        if (!formData.altura_cm) return 'A altura é obrigatória.'
+        if (formData.altura_cm < 100 || formData.altura_cm > 250) return 'A altura deve ser entre 100 cm e 250 cm.'
+        if (!formData.peso_avaliacao) return 'O peso atual é obrigatório.'
+        if (formData.peso_avaliacao < 30 || formData.peso_avaliacao > 300) return 'O peso deve ser entre 30 kg e 300 kg.'
+        return null
+      case 3: // Saúde
+        if (!formData.lesoes_anteriores || formData.lesoes_anteriores.length === 0) {
+          return 'Seleciona pelo menos uma opção em lesões anteriores (ou "Nenhuma").'
+        }
+        if (!formData.dores_atuais || formData.dores_atuais.length === 0) {
+          return 'Seleciona pelo menos uma opção em dores atuais (ou "Nenhuma").'
+        }
+        return null
+      case 5: // Alimentação
+        if (!formData.alergias_alimentares || formData.alergias_alimentares.length === 0) {
+          return 'Seleciona pelo menos uma opção em alergias alimentares (ou "Nenhuma").'
+        }
+        if (!formData.objetivo_nutricional) {
+          return 'O objetivo nutricional é obrigatório.'
+        }
+        return null
+      case 6: // Preferências (Local de Treino)
+        if (!formData.local_treino) {
+          return 'O local de treino é obrigatório.'
+        }
+        return null
+      case 7: // Motivação
+        if (!formData.motivacao_principal || !formData.motivacao_principal.trim()) {
+          return 'A motivação principal é obrigatória.'
+        }
+        return null
+      default:
+        return null
+    }
+  }
+
   const nextStep = () => {
+    const validationError = validateStep(currentStep)
+    if (validationError) {
+      setError(validationError)
+      return
+    }
+    setError(null)
     if (currentStep < STEPS.length) setCurrentStep(prev => prev + 1)
   }
 
   const prevStep = () => {
+    setError(null)
     if (currentStep > 1) setCurrentStep(prev => prev - 1)
   }
 
   // Submit
   const handleSubmit = async () => {
+    const validationError = validateStep(currentStep)
+    if (validationError) {
+      setError(validationError)
+      return
+    }
+
     setIsSubmitting(true)
     setError(null)
 
     try {
-      const today = new Date().toISOString().split('T')[0]
-      const nextEval = new Date()
-      nextEval.setDate(nextEval.getDate() + 30)
+      // A persistência (encriptação AES-256-GCM + merge em profiles.metadata)
+      // corre numa server action, pois a ENCRYPTION_KEY é server-only. O merge
+      // é idempotente, por isso 'criar' e 'editar' usam o mesmo caminho.
+      const result = await saveAnamneseCompleta(perfilId, formData)
 
-      // Limpar arrays com "Nenhuma/Nenhum"
-      const cleanArray = (arr: string[] | undefined, noneValue: string) => 
-        arr?.filter(item => item !== noneValue) ?? []
-
-      const payload = {
-        perfil_id: perfilId,
-        tipo_anamnese: 'completa',
-        data_avaliacao: today,
-        proxima_reavaliacao: nextEval.toISOString().split('T')[0],
-        
-        // Histórico
-        tempo_treino_meses: formData.tempo_treino_meses,
-        frequencia_anterior: formData.frequencia_anterior,
-        modalidades_previas: formData.modalidades_previas,
-        
-        // Medidas
-        peso_avaliacao: formData.peso_avaliacao,
-        percentual_gordura: formData.percentual_gordura,
-        circunferencia_cintura: formData.circunferencia_cintura,
-        circunferencia_quadril: formData.circunferencia_quadril,
-        
-        // Saúde
-        lesoes_anteriores: cleanArray(formData.lesoes_anteriores, 'Nenhuma'),
-        dores_atuais: cleanArray(formData.dores_atuais, 'Nenhuma'),
-        medicamentos: formData.medicamentos?.filter(Boolean) ?? [],
-        restricoes_medicas: formData.restricoes_medicas || null,
-        
-        // Rotina
-        horas_sono_media: formData.horas_sono_media,
-        horario_acordar: formData.horario_acordar || null,
-        horario_dormir: formData.horario_dormir || null,
-        horario_treino: formData.horario_treino || null,
-        nivel_stress: formData.nivel_stress,
-        nivel_energia: formData.nivel_energia,
-        trabalho_tipo: formData.trabalho_tipo || null,
-        
-        // Alimentação
-        refeicoes_dia: formData.refeicoes_dia,
-        consumo_agua_litros: formData.consumo_agua_litros,
-        restricoes_alimentares: cleanArray(formData.restricoes_alimentares, 'Nenhuma'),
-        alergias_alimentares: cleanArray(formData.alergias_alimentares, 'Nenhuma'),
-        preferencias_alimentares: formData.preferencias_alimentares,
-        alimentos_nao_gosta: formData.alimentos_nao_gosta?.filter(Boolean) ?? [],
-        suplementos_atuais: cleanArray(formData.suplementos_atuais, 'Nenhum'),
-        objetivo_nutricional: formData.objetivo_nutricional || null,
-        orcamento_alimentacao: formData.orcamento_alimentacao || null,
-        cozinha_propria: formData.cozinha_propria,
-        tempo_preparacao_minutos: formData.tempo_preparacao_minutos,
-        frequencia_come_fora: formData.frequencia_come_fora,
-        
-        // Preferências
-        local_treino: formData.local_treino || null,
-        exercicios_favoritos: formData.exercicios_favoritos,
-        exercicios_evitar: formData.exercicios_evitar,
-        equipamentos_disponiveis: cleanArray(formData.equipamentos_disponiveis, 'Nenhum específico'),
-        prefere_maquinas: formData.prefere_maquinas,
-        
-        // Motivação
-        motivacao_principal: formData.motivacao_principal || null,
-        maior_dificuldade: formData.maior_dificuldade || null,
-        compromisso: formData.compromisso,
-        observacoes: formData.observacoes || null,
-      }
-
-      if (modo === 'criar') {
-        const { error: insertError } = await supabase
-          .from('anamnese')
-          .insert(payload)
-
-        if (insertError) throw insertError
-
-        // Atualizar perfil com dados essenciais (incluindo altura)
-        await supabase
-          .from('perfil_utilizador')
-          .update({
-            altura_cm: formData.altura_cm,
-            peso_avaliacao: formData.peso_avaliacao,
-            percentual_gordura: formData.percentual_gordura,
-            lesoes_anteriores: cleanArray(formData.lesoes_anteriores, 'Nenhuma'),
-            alergias_alimentares: cleanArray(formData.alergias_alimentares, 'Nenhuma'),
-            restricoes_medicas: formData.restricoes_medicas || null,
-            onboarding_completo: true,
-          })
-          .eq('id', perfilId)
-
-      } else {
-        // Modo editar
-        const { error: updateError } = await supabase
-          .from('anamnese')
-          .update(payload)
-          .eq('id', anamneseId)
-
-        if (updateError) throw updateError
-
-        // Atualizar perfil também (incluindo altura)
-        await supabase
-          .from('perfil_utilizador')
-          .update({
-            altura_cm: formData.altura_cm,
-            peso_avaliacao: formData.peso_avaliacao,
-            percentual_gordura: formData.percentual_gordura,
-            lesoes_anteriores: cleanArray(formData.lesoes_anteriores, 'Nenhuma'),
-            alergias_alimentares: cleanArray(formData.alergias_alimentares, 'Nenhuma'),
-            restricoes_medicas: formData.restricoes_medicas || null,
-          })
-          .eq('id', perfilId)
+      if (!result.success) {
+        setError(result.error || 'Erro ao salvar. Tenta novamente.')
+        return
       }
 
       router.push(redirectTo)
@@ -326,7 +274,12 @@ export function AnamneseFormWizard({
           return (
             <button
               key={step.id}
-              onClick={() => setCurrentStep(step.id)}
+              onClick={() => {
+                if (step.id < currentStep) {
+                  setCurrentStep(step.id)
+                  setError(null)
+                }
+              }}
               className={`flex flex-col items-center min-w-[64px] transition-all cursor-pointer ${
                 isCurrent
                   ? 'text-primary'

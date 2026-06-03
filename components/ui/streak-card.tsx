@@ -7,12 +7,12 @@ interface StreakCardProps {
   bestStreak: number
 }
 
-function getFlameColor(streak: number): string {
-  if (streak >= 14) return "text-red-500"
-  if (streak >= 7) return "text-orange-400"
-  if (streak >= 3) return "text-amber-400"
-  if (streak > 0) return "text-zinc-400"
-  return "text-zinc-600"
+function getFlameColorVar(streak: number): string {
+  if (streak >= 14) return "var(--color-flame-max)"
+  if (streak >= 7)  return "var(--color-flame-hot)"
+  if (streak >= 3)  return "var(--color-flame-warm)"
+  if (streak > 0)   return "var(--color-flame-low)"
+  return "var(--color-flame-cold)"
 }
 
 export function StreakCard({ currentStreak, bestStreak }: StreakCardProps) {
@@ -23,7 +23,8 @@ export function StreakCard({ currentStreak, bestStreak }: StreakCardProps) {
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Flame
-            className={`h-5 w-5 ${getFlameColor(currentStreak)} ${shouldAnimate ? "animate-flame" : ""}`}
+            className={`h-5 w-5 ${shouldAnimate ? "animate-flame" : ""}`}
+            style={{ color: getFlameColorVar(currentStreak) }}
           />
           <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">
             Sequência

@@ -46,7 +46,7 @@ export async function updateUserRole(
 
   if (profileError) {
     console.error('Erro ao atualizar profiles:', profileError)
-    return { success: false, error: `Erro ao atualizar perfil: ${profileError.message}` }
+    return { success: false, error: 'Erro ao atualizar perfil.' }
   }
 
   // 4. Atualizar/sincronizar a tabela public.user_roles
@@ -61,7 +61,7 @@ export async function updateUserRole(
 
   if (roleError) {
     console.error('Erro ao atualizar user_roles:', roleError)
-    return { success: false, error: `Erro ao atualizar papel do sistema: ${roleError.message}` }
+    return { success: false, error: 'Erro ao atualizar papel do sistema.' }
   }
 
   revalidatePath('/admin')

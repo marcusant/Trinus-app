@@ -78,7 +78,7 @@ export function StepAlimentacao({
 
       <div>
         <label className="block text-sm text-muted-foreground mb-3">
-          Alergias alimentares
+          Alergias alimentares <span className="text-destructive font-medium">*</span>
         </label>
         <ChipSelector
           options={ALERGIAS_COMUNS}
@@ -128,7 +128,7 @@ export function StepAlimentacao({
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm text-muted-foreground mb-2">
-            Objetivo nutricional
+            Objetivo nutricional <span className="text-destructive font-medium">*</span>
           </label>
           <select
             value={formData.objetivo_nutricional ?? ''}

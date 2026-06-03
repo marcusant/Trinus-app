@@ -10,26 +10,27 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.4"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
       anamnese: {
         Row: {
-          alergias_alimentares: string[] | null
-          alimentos_nao_gosta: string[] | null
-          anamnese_anterior_id: string | null
+          alergias_alimentares: string[]
+          alimentos_nao_gosta: string[]
+          altura_cm: number | null
           circunferencia_cintura: number | null
           circunferencia_quadril: number | null
+          client_id: string
           compromisso: number | null
           consumo_agua_litros: number | null
           cozinha_propria: boolean | null
-          created_at: string | null
-          data_avaliacao: string | null
-          dores_atuais: string[] | null
-          equipamentos_disponiveis: string[] | null
-          exercicios_evitar: string[] | null
-          exercicios_favoritos: string[] | null
+          created_at: string
+          data_avaliacao: string
+          dores_atuais: string[]
+          equipamentos_disponiveis: string[]
+          exercicios_evitar: string[]
+          exercicios_favoritos: string[]
           frequencia_anterior: number | null
           frequencia_come_fora: number | null
           horario_acordar: string | null
@@ -37,11 +38,11 @@ export type Database = {
           horario_treino: string | null
           horas_sono_media: number | null
           id: string
-          lesoes_anteriores: string[] | null
+          lesoes_anteriores: string[]
           local_treino: string | null
           maior_dificuldade: string | null
-          medicamentos: string[] | null
-          modalidades_previas: string[] | null
+          medicamentos: string[]
+          modalidades_previas: string[]
           motivacao_principal: string | null
           nivel_energia: number | null
           nivel_stress: number | null
@@ -49,35 +50,36 @@ export type Database = {
           observacoes: string | null
           orcamento_alimentacao: string | null
           percentual_gordura: number | null
-          perfil_id: string | null
           peso_avaliacao: number | null
           prefere_maquinas: boolean | null
-          preferencias_alimentares: string[] | null
+          preferencias_alimentares: string[]
           proxima_reavaliacao: string | null
           refeicoes_dia: number | null
-          restricoes_alimentares: string[] | null
+          restricoes_alimentares: string[]
           restricoes_medicas: string | null
-          suplementos_atuais: string[] | null
+          suplementos_atuais: string[]
           tempo_preparacao_minutos: number | null
           tempo_treino_meses: number | null
-          tipo_anamnese: string | null
+          tipo: string
           trabalho_tipo: string | null
+          updated_at: string
         }
         Insert: {
-          alergias_alimentares?: string[] | null
-          alimentos_nao_gosta?: string[] | null
-          anamnese_anterior_id?: string | null
+          alergias_alimentares?: string[]
+          alimentos_nao_gosta?: string[]
+          altura_cm?: number | null
           circunferencia_cintura?: number | null
           circunferencia_quadril?: number | null
+          client_id: string
           compromisso?: number | null
           consumo_agua_litros?: number | null
           cozinha_propria?: boolean | null
-          created_at?: string | null
-          data_avaliacao?: string | null
-          dores_atuais?: string[] | null
-          equipamentos_disponiveis?: string[] | null
-          exercicios_evitar?: string[] | null
-          exercicios_favoritos?: string[] | null
+          created_at?: string
+          data_avaliacao?: string
+          dores_atuais?: string[]
+          equipamentos_disponiveis?: string[]
+          exercicios_evitar?: string[]
+          exercicios_favoritos?: string[]
           frequencia_anterior?: number | null
           frequencia_come_fora?: number | null
           horario_acordar?: string | null
@@ -85,11 +87,11 @@ export type Database = {
           horario_treino?: string | null
           horas_sono_media?: number | null
           id?: string
-          lesoes_anteriores?: string[] | null
+          lesoes_anteriores?: string[]
           local_treino?: string | null
           maior_dificuldade?: string | null
-          medicamentos?: string[] | null
-          modalidades_previas?: string[] | null
+          medicamentos?: string[]
+          modalidades_previas?: string[]
           motivacao_principal?: string | null
           nivel_energia?: number | null
           nivel_stress?: number | null
@@ -97,35 +99,36 @@ export type Database = {
           observacoes?: string | null
           orcamento_alimentacao?: string | null
           percentual_gordura?: number | null
-          perfil_id?: string | null
           peso_avaliacao?: number | null
           prefere_maquinas?: boolean | null
-          preferencias_alimentares?: string[] | null
+          preferencias_alimentares?: string[]
           proxima_reavaliacao?: string | null
           refeicoes_dia?: number | null
-          restricoes_alimentares?: string[] | null
+          restricoes_alimentares?: string[]
           restricoes_medicas?: string | null
-          suplementos_atuais?: string[] | null
+          suplementos_atuais?: string[]
           tempo_preparacao_minutos?: number | null
           tempo_treino_meses?: number | null
-          tipo_anamnese?: string | null
+          tipo?: string
           trabalho_tipo?: string | null
+          updated_at?: string
         }
         Update: {
-          alergias_alimentares?: string[] | null
-          alimentos_nao_gosta?: string[] | null
-          anamnese_anterior_id?: string | null
+          alergias_alimentares?: string[]
+          alimentos_nao_gosta?: string[]
+          altura_cm?: number | null
           circunferencia_cintura?: number | null
           circunferencia_quadril?: number | null
+          client_id?: string
           compromisso?: number | null
           consumo_agua_litros?: number | null
           cozinha_propria?: boolean | null
-          created_at?: string | null
-          data_avaliacao?: string | null
-          dores_atuais?: string[] | null
-          equipamentos_disponiveis?: string[] | null
-          exercicios_evitar?: string[] | null
-          exercicios_favoritos?: string[] | null
+          created_at?: string
+          data_avaliacao?: string
+          dores_atuais?: string[]
+          equipamentos_disponiveis?: string[]
+          exercicios_evitar?: string[]
+          exercicios_favoritos?: string[]
           frequencia_anterior?: number | null
           frequencia_come_fora?: number | null
           horario_acordar?: string | null
@@ -133,11 +136,11 @@ export type Database = {
           horario_treino?: string | null
           horas_sono_media?: number | null
           id?: string
-          lesoes_anteriores?: string[] | null
+          lesoes_anteriores?: string[]
           local_treino?: string | null
           maior_dificuldade?: string | null
-          medicamentos?: string[] | null
-          modalidades_previas?: string[] | null
+          medicamentos?: string[]
+          modalidades_previas?: string[]
           motivacao_principal?: string | null
           nivel_energia?: number | null
           nivel_stress?: number | null
@@ -145,1074 +148,823 @@ export type Database = {
           observacoes?: string | null
           orcamento_alimentacao?: string | null
           percentual_gordura?: number | null
-          perfil_id?: string | null
           peso_avaliacao?: number | null
           prefere_maquinas?: boolean | null
-          preferencias_alimentares?: string[] | null
+          preferencias_alimentares?: string[]
           proxima_reavaliacao?: string | null
           refeicoes_dia?: number | null
-          restricoes_alimentares?: string[] | null
+          restricoes_alimentares?: string[]
           restricoes_medicas?: string | null
-          suplementos_atuais?: string[] | null
+          suplementos_atuais?: string[]
           tempo_preparacao_minutos?: number | null
           tempo_treino_meses?: number | null
-          tipo_anamnese?: string | null
+          tipo?: string
           trabalho_tipo?: string | null
+          updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "vw_historico_anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "vw_ultima_anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_perfil_id_fkey"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "perfil_utilizador"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_perfil_id_fkey"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "vw_reavaliacao_pendente"
-            referencedColumns: ["perfil_id"]
-          },
-        ]
-      }
-      cardio_config: {
-        Row: {
-          created_at: string | null
-          duracao_min: number | null
-          frequencia_semanal: number | null
-          id: number
-          intensidade: string | null
-          momento: string | null
-          nivel: string | null
-          objetivo: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          duracao_min?: number | null
-          frequencia_semanal?: number | null
-          id?: number
-          intensidade?: string | null
-          momento?: string | null
-          nivel?: string | null
-          objetivo?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          duracao_min?: number | null
-          frequencia_semanal?: number | null
-          id?: number
-          intensidade?: string | null
-          momento?: string | null
-          nivel?: string | null
-          objetivo?: string | null
-        }
-        Relationships: []
-      }
-      checkin: {
-        Row: {
-          acao_sugerida: string | null
-          created_at: string | null
-          dor_articular: boolean | null
-          id: string
-          motivacao: number | null
-          observacoes: string | null
-          plano_id: string | null
-          qualidade_sono: number | null
-          rpe_percebido: number | null
-          semana: number | null
-          treinos_completados: number | null
-        }
-        Insert: {
-          acao_sugerida?: string | null
-          created_at?: string | null
-          dor_articular?: boolean | null
-          id?: string
-          motivacao?: number | null
-          observacoes?: string | null
-          plano_id?: string | null
-          qualidade_sono?: number | null
-          rpe_percebido?: number | null
-          semana?: number | null
-          treinos_completados?: number | null
-        }
-        Update: {
-          acao_sugerida?: string | null
-          created_at?: string | null
-          dor_articular?: boolean | null
-          id?: string
-          motivacao?: number | null
-          observacoes?: string | null
-          plano_id?: string | null
-          qualidade_sono?: number | null
-          rpe_percebido?: number | null
-          semana?: number | null
-          treinos_completados?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_checkin_plano"
-            columns: ["plano_id"]
-            isOneToOne: false
-            referencedRelation: "planos_treino"
+            foreignKeyName: "anamnese_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
       }
-      exercicios: {
+      assessments: {
         Row: {
-          categoria: string | null
-          created_at: string | null
-          descricao: string | null
-          dificuldade: string | null
-          equipamento: string
-          gif_url: string | null
-          grupo_muscular: string
+          client_id: string
+          created_at: string
           id: string
-          instrucoes: string[] | null
-          local: string | null
-          musculo_alvo: string
-          musculos_secundarios: string[] | null
-          nivel: string | null
-          nome: string
-          nome_en: string
-          padrao_movimento: string | null
-          pode_ser_principal: boolean | null
-          slug: string | null
-          tipo_grupo: string | null
-          tipo_movimento: string | null
-          variacao_de: string | null
+          notes: string | null
+          scheduled_at: string
+          status: Database["public"]["Enums"]["assessment_status"]
+          trainer_id: string
+          updated_at: string
         }
         Insert: {
-          categoria?: string | null
-          created_at?: string | null
-          descricao?: string | null
-          dificuldade?: string | null
-          equipamento: string
-          gif_url?: string | null
-          grupo_muscular: string
-          id: string
-          instrucoes?: string[] | null
-          local?: string | null
-          musculo_alvo: string
-          musculos_secundarios?: string[] | null
-          nivel?: string | null
-          nome: string
-          nome_en: string
-          padrao_movimento?: string | null
-          pode_ser_principal?: boolean | null
-          slug?: string | null
-          tipo_grupo?: string | null
-          tipo_movimento?: string | null
-          variacao_de?: string | null
+          client_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          scheduled_at: string
+          status?: Database["public"]["Enums"]["assessment_status"]
+          trainer_id: string
+          updated_at?: string
         }
         Update: {
-          categoria?: string | null
-          created_at?: string | null
-          descricao?: string | null
-          dificuldade?: string | null
-          equipamento?: string
-          gif_url?: string | null
-          grupo_muscular?: string
+          client_id?: string
+          created_at?: string
           id?: string
-          instrucoes?: string[] | null
-          local?: string | null
-          musculo_alvo?: string
-          musculos_secundarios?: string[] | null
-          nivel?: string | null
-          nome?: string
-          nome_en?: string
-          padrao_movimento?: string | null
-          pode_ser_principal?: boolean | null
-          slug?: string | null
-          tipo_grupo?: string | null
-          tipo_movimento?: string | null
-          variacao_de?: string | null
+          notes?: string | null
+          scheduled_at?: string
+          status?: Database["public"]["Enums"]["assessment_status"]
+          trainer_id?: string
+          updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "exercicios_variacao_de_fkey"
-            columns: ["variacao_de"]
+            foreignKeyName: "assessments_client_id_fkey"
+            columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "exercicios"
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessments_trainer_id_fkey"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
       }
-      exercicios_cardio: {
+      check_ins: {
         Row: {
-          calorias_hora_media: number | null
-          created_at: string | null
-          id: number
-          impacto: string | null
-          intensidade_recomendada: string | null
-          local: string | null
-          nome: string
+          client_id: string
+          created_at: string
+          date: string
+          energy_level: number | null
+          id: string
+          mood: number | null
+          notes: string | null
+          photo_url: string | null
+          updated_at: string
+          weight_kg: number | null
         }
         Insert: {
-          calorias_hora_media?: number | null
-          created_at?: string | null
-          id?: number
-          impacto?: string | null
-          intensidade_recomendada?: string | null
-          local?: string | null
-          nome: string
-        }
-        Update: {
-          calorias_hora_media?: number | null
-          created_at?: string | null
-          id?: number
-          impacto?: string | null
-          intensidade_recomendada?: string | null
-          local?: string | null
-          nome?: string
-        }
-        Relationships: []
-      }
-      medicoes: {
-        Row: {
-          created_at: string | null
-          data: string | null
-          fotos_urls: Json | null
-          id: string
-          notas: string | null
-          percentual_gordura: number | null
-          perfil_id: string | null
-          perimetros: Json | null
-          peso: number | null
-        }
-        Insert: {
-          created_at?: string | null
-          data?: string | null
-          fotos_urls?: Json | null
-          id: string
-          notas?: string | null
-          percentual_gordura?: number | null
-          perfil_id?: string | null
-          perimetros?: Json | null
-          peso?: number | null
-        }
-        Update: {
-          created_at?: string | null
-          data?: string | null
-          fotos_urls?: Json | null
+          client_id: string
+          created_at?: string
+          date?: string
+          energy_level?: number | null
           id?: string
-          notas?: string | null
-          percentual_gordura?: number | null
-          perfil_id?: string | null
-          perimetros?: Json | null
-          peso?: number | null
+          mood?: number | null
+          notes?: string | null
+          photo_url?: string | null
+          updated_at?: string
+          weight_kg?: number | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          date?: string
+          energy_level?: number | null
+          id?: string
+          mood?: number | null
+          notes?: string | null
+          photo_url?: string | null
+          updated_at?: string
+          weight_kg?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "fk_medicoes_perfil"
-            columns: ["perfil_id"]
+            foreignKeyName: "check_ins_client_id_fkey"
+            columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "perfil_utilizador"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "fk_medicoes_perfil"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "vw_reavaliacao_pendente"
-            referencedColumns: ["perfil_id"]
           },
         ]
       }
-      mesociclo_template: {
+      exercises: {
         Row: {
-          acao: string
-          created_at: string | null
+          category: string | null
+          created_at: string
+          difficulty: string | null
+          equipment: string | null
+          exercise_code: string | null
+          exercise_type: string
           id: string
-          nivel: string
-          rpe_max: number
-          rpe_min: number
-          semana: number
-          zona: string
+          location: string | null
+          muscle_group: string | null
+          name: string
+          secondary_muscles: string | null
+          updated_at: string
+          video_url: string | null
         }
         Insert: {
-          acao: string
-          created_at?: string | null
+          category?: string | null
+          created_at?: string
+          difficulty?: string | null
+          equipment?: string | null
+          exercise_code?: string | null
+          exercise_type?: string
           id?: string
-          nivel: string
-          rpe_max: number
-          rpe_min: number
-          semana: number
-          zona: string
+          location?: string | null
+          muscle_group?: string | null
+          name: string
+          secondary_muscles?: string | null
+          updated_at?: string
+          video_url?: string | null
         }
         Update: {
-          acao?: string
-          created_at?: string | null
+          category?: string | null
+          created_at?: string
+          difficulty?: string | null
+          equipment?: string | null
+          exercise_code?: string | null
+          exercise_type?: string
           id?: string
-          nivel?: string
-          rpe_max?: number
-          rpe_min?: number
-          semana?: number
-          zona?: string
+          location?: string | null
+          muscle_group?: string | null
+          name?: string
+          secondary_muscles?: string | null
+          updated_at?: string
+          video_url?: string | null
         }
         Relationships: []
       }
-      overlap_muscular: {
+      meal_days: {
         Row: {
-          coeficiente: number | null
-          created_at: string | null
-          exercicio_ref: string
-          grupo_muscular: string
+          created_at: string
+          day_number: number
           id: string
+          name: string | null
+          plan_id: string
+          updated_at: string
         }
         Insert: {
-          coeficiente?: number | null
-          created_at?: string | null
-          exercicio_ref: string
-          grupo_muscular: string
+          created_at?: string
+          day_number: number
           id?: string
+          name?: string | null
+          plan_id: string
+          updated_at?: string
         }
         Update: {
-          coeficiente?: number | null
-          created_at?: string | null
-          exercicio_ref?: string
-          grupo_muscular?: string
+          created_at?: string
+          day_number?: number
           id?: string
+          name?: string | null
+          plan_id?: string
+          updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "meal_days_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "meal_plans"
+            referencedColumns: ["id"]
+          },
+        ]
       }
-      perfil_utilizador: {
+      meal_items: {
         Row: {
-          alergias_alimentares: string[] | null
-          altura_cm: number | null
-          cidade_residencia: string | null
-          circunferencia_cintura: number | null
-          condicoes_saude: string[] | null
+          calories: number | null
+          created_at: string
+          id: string
+          meal_id: string
+          name: string
+          quantity: number | null
+          unit: string | null
+          updated_at: string
+        }
+        Insert: {
+          calories?: number | null
+          created_at?: string
+          id?: string
+          meal_id: string
+          name: string
+          quantity?: number | null
+          unit?: string | null
+          updated_at?: string
+        }
+        Update: {
+          calories?: number | null
+          created_at?: string
+          id?: string
+          meal_id?: string
+          name?: string
+          quantity?: number | null
+          unit?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meal_items_meal_id_fkey"
+            columns: ["meal_id"]
+            isOneToOne: false
+            referencedRelation: "meals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meal_plans: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          name: string
+          status: Database["public"]["Enums"]["plan_status"]
+          trainer_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          name: string
+          status?: Database["public"]["Enums"]["plan_status"]
+          trainer_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          status?: Database["public"]["Enums"]["plan_status"]
+          trainer_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meal_plans_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meal_plans_trainer_id_fkey"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meals: {
+        Row: {
+          created_at: string
+          day_id: string
+          id: string
+          meal_type: Database["public"]["Enums"]["meal_type"]
+          name: string
+          time_scheduled: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          day_id: string
+          id?: string
+          meal_type: Database["public"]["Enums"]["meal_type"]
+          name: string
+          time_scheduled?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          day_id?: string
+          id?: string
+          meal_type?: Database["public"]["Enums"]["meal_type"]
+          name?: string
+          time_scheduled?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meals_day_id_fkey"
+            columns: ["day_id"]
+            isOneToOne: false
+            referencedRelation: "meal_days"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
           created_at: string | null
-          data_nascimento: string | null
-          dias_disponiveis: string[] | null
-          dores_atuais: string[] | null
           email: string | null
-          equipamento_disponivel: string[] | null
-          frequencia_treino_semanal: number | null
-          genero: string | null
-          hora_nascimento: string | null
-          horas_sono_media: number | null
+          full_name: string | null
           id: string
-          lesoes_anteriores: string[] | null
-          local_nascimento_cidade: string | null
-          local_nascimento_pais: string | null
-          local_treino: string | null
-          nacionalidade: string | null
-          nivel_experiencia: string | null
-          nivel_stress: number | null
-          nome: string
-          objetivo_principal: string | null
-          objetivos_secundarios: string[] | null
-          observacoes: string | null
-          onboarding_completo: boolean | null
-          onboarding_step: number | null
-          pais_residencia: string | null
-          percentual_gordura: number | null
-          peso_avaliacao: number | null
-          restricoes_medicas: string | null
-          role: string | null
-          telefone: string | null
-          tempo_disponivel_minutos: number | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          alergias_alimentares?: string[] | null
-          altura_cm?: number | null
-          cidade_residencia?: string | null
-          circunferencia_cintura?: number | null
-          condicoes_saude?: string[] | null
-          created_at?: string | null
-          data_nascimento?: string | null
-          dias_disponiveis?: string[] | null
-          dores_atuais?: string[] | null
-          email?: string | null
-          equipamento_disponivel?: string[] | null
-          frequencia_treino_semanal?: number | null
-          genero?: string | null
-          hora_nascimento?: string | null
-          horas_sono_media?: number | null
-          id?: string
-          lesoes_anteriores?: string[] | null
-          local_nascimento_cidade?: string | null
-          local_nascimento_pais?: string | null
-          local_treino?: string | null
-          nacionalidade?: string | null
-          nivel_experiencia?: string | null
-          nivel_stress?: number | null
-          nome: string
-          objetivo_principal?: string | null
-          objetivos_secundarios?: string[] | null
-          observacoes?: string | null
-          onboarding_completo?: boolean | null
-          onboarding_step?: number | null
-          pais_residencia?: string | null
-          percentual_gordura?: number | null
-          peso_avaliacao?: number | null
-          restricoes_medicas?: string | null
-          role?: string | null
-          telefone?: string | null
-          tempo_disponivel_minutos?: number | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          alergias_alimentares?: string[] | null
-          altura_cm?: number | null
-          cidade_residencia?: string | null
-          circunferencia_cintura?: number | null
-          condicoes_saude?: string[] | null
-          created_at?: string | null
-          data_nascimento?: string | null
-          dias_disponiveis?: string[] | null
-          dores_atuais?: string[] | null
-          email?: string | null
-          equipamento_disponivel?: string[] | null
-          frequencia_treino_semanal?: number | null
-          genero?: string | null
-          hora_nascimento?: string | null
-          horas_sono_media?: number | null
-          id?: string
-          lesoes_anteriores?: string[] | null
-          local_nascimento_cidade?: string | null
-          local_nascimento_pais?: string | null
-          local_treino?: string | null
-          nacionalidade?: string | null
-          nivel_experiencia?: string | null
-          nivel_stress?: number | null
-          nome?: string
-          objetivo_principal?: string | null
-          objetivos_secundarios?: string[] | null
-          observacoes?: string | null
-          onboarding_completo?: boolean | null
-          onboarding_step?: number | null
-          pais_residencia?: string | null
-          percentual_gordura?: number | null
-          peso_avaliacao?: number | null
-          restricoes_medicas?: string | null
-          role?: string | null
-          telefone?: string | null
-          tempo_disponivel_minutos?: number | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      plano_exercicio: {
-        Row: {
-          created_at: string | null
-          descanso_seg: number | null
-          exercicio_id: string | null
-          id: string
-          observacao: string | null
-          ordem: number | null
-          reps_max: number | null
-          reps_min: number | null
-          rpe_alvo: number | null
-          series: number | null
-          sessao_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          descanso_seg?: number | null
-          exercicio_id?: string | null
-          id?: string
-          observacao?: string | null
-          ordem?: number | null
-          reps_max?: number | null
-          reps_min?: number | null
-          rpe_alvo?: number | null
-          series?: number | null
-          sessao_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          descanso_seg?: number | null
-          exercicio_id?: string | null
-          id?: string
-          observacao?: string | null
-          ordem?: number | null
-          reps_max?: number | null
-          reps_min?: number | null
-          rpe_alvo?: number | null
-          series?: number | null
-          sessao_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "plano_exercicio_exercicio_id_fkey"
-            columns: ["exercicio_id"]
-            isOneToOne: false
-            referencedRelation: "exercicios"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "plano_exercicio_sessao_id_fkey"
-            columns: ["sessao_id"]
-            isOneToOne: false
-            referencedRelation: "plano_sessao"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      plano_sessao: {
-        Row: {
-          created_at: string | null
-          foco: string | null
-          id: string
-          letra: string | null
-          ordem: number | null
-          plano_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          foco?: string | null
-          id?: string
-          letra?: string | null
-          ordem?: number | null
-          plano_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          foco?: string | null
-          id?: string
-          letra?: string | null
-          ordem?: number | null
-          plano_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_plano_sessao_plano"
-            columns: ["plano_id"]
-            isOneToOne: false
-            referencedRelation: "planos_treino"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      plano_volume: {
-        Row: {
-          created_at: string | null
-          grupo_muscular: string | null
-          id: string
-          plano_id: string | null
-          series_diretas: number | null
-          series_indiretas: number | null
-          total_efetivo: number | null
-          zona: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          grupo_muscular?: string | null
-          id?: string
-          plano_id?: string | null
-          series_diretas?: number | null
-          series_indiretas?: number | null
-          total_efetivo?: number | null
-          zona?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          grupo_muscular?: string | null
-          id?: string
-          plano_id?: string | null
-          series_diretas?: number | null
-          series_indiretas?: number | null
-          total_efetivo?: number | null
-          zona?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_plano_volume_plano"
-            columns: ["plano_id"]
-            isOneToOne: false
-            referencedRelation: "planos_treino"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      planos_alimentares: {
-        Row: {
-          altura: number | null
-          anamnese_id: string | null
-          ativo: boolean | null
-          contexto: string | null
-          created_at: string | null
-          duracao_semanas: number | null
-          id: string
-          idade: number | null
-          idioma: string | null
-          kcal_diarias: number | null
-          localizacao: string | null
-          nome: string | null
-          objetivo: string | null
-          perfil_id: string | null
-          peso: number | null
-          plano: string | null
-          refeicoes_dia: number | null
-          restricoes: string | null
-          tipo: string | null
-        }
-        Insert: {
-          altura?: number | null
-          anamnese_id?: string | null
-          ativo?: boolean | null
-          contexto?: string | null
-          created_at?: string | null
-          duracao_semanas?: number | null
-          id?: string
-          idade?: number | null
-          idioma?: string | null
-          kcal_diarias?: number | null
-          localizacao?: string | null
-          nome?: string | null
-          objetivo?: string | null
-          perfil_id?: string | null
-          peso?: number | null
-          plano?: string | null
-          refeicoes_dia?: number | null
-          restricoes?: string | null
-          tipo?: string | null
-        }
-        Update: {
-          altura?: number | null
-          anamnese_id?: string | null
-          ativo?: boolean | null
-          contexto?: string | null
-          created_at?: string | null
-          duracao_semanas?: number | null
-          id?: string
-          idade?: number | null
-          idioma?: string | null
-          kcal_diarias?: number | null
-          localizacao?: string | null
-          nome?: string | null
-          objetivo?: string | null
-          perfil_id?: string | null
-          peso?: number | null
-          plano?: string | null
-          refeicoes_dia?: number | null
-          restricoes?: string | null
-          tipo?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_planos_alimentares_perfil"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "perfil_utilizador"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "fk_planos_alimentares_perfil"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "vw_reavaliacao_pendente"
-            referencedColumns: ["perfil_id"]
-          },
-          {
-            foreignKeyName: "planos_alimentares_anamnese_id_fkey"
-            columns: ["anamnese_id"]
-            isOneToOne: false
-            referencedRelation: "anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "planos_alimentares_anamnese_id_fkey"
-            columns: ["anamnese_id"]
-            isOneToOne: false
-            referencedRelation: "vw_historico_anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "planos_alimentares_anamnese_id_fkey"
-            columns: ["anamnese_id"]
-            isOneToOne: false
-            referencedRelation: "vw_ultima_anamnese"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      planos_treino: {
-        Row: {
-          anamnese_id: string | null
-          ativo: boolean | null
-          conteudo: string | null
-          created_at: string | null
-          duracao_semanas: number | null
-          frequencia_semanal: number | null
-          id: string
-          local_treino: string | null
-          nivel: string | null
-          nome: string | null
-          objetivo: string
-          observacoes: string | null
-          perfil_id: string
-          tempo_treino: number | null
+          metadata: Json | null
+          par_q_alert: boolean | null
+          par_q_caminho_alternativo: boolean | null
+          role: string
           updated_at: string | null
         }
         Insert: {
-          anamnese_id?: string | null
-          ativo?: boolean | null
-          conteudo?: string | null
+          avatar_url?: string | null
           created_at?: string | null
-          duracao_semanas?: number | null
-          frequencia_semanal?: number | null
-          id?: string
-          local_treino?: string | null
-          nivel?: string | null
-          nome?: string | null
-          objetivo: string
-          observacoes?: string | null
-          perfil_id: string
-          tempo_treino?: number | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          metadata?: Json | null
+          par_q_alert?: boolean | null
+          par_q_caminho_alternativo?: boolean | null
+          role?: string
           updated_at?: string | null
         }
         Update: {
-          anamnese_id?: string | null
-          ativo?: boolean | null
-          conteudo?: string | null
+          avatar_url?: string | null
           created_at?: string | null
-          duracao_semanas?: number | null
-          frequencia_semanal?: number | null
+          email?: string | null
+          full_name?: string | null
           id?: string
-          local_treino?: string | null
-          nivel?: string | null
-          nome?: string | null
-          objetivo?: string
-          observacoes?: string | null
-          perfil_id?: string
-          tempo_treino?: number | null
+          metadata?: Json | null
+          par_q_alert?: boolean | null
+          par_q_caminho_alternativo?: boolean | null
+          role?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      progressive_anamnese: {
+        Row: {
+          answered_at: string
+          client_id: string
+          id: string
+          key: string
+          value: string
+          xp_awarded: number
+        }
+        Insert: {
+          answered_at?: string
+          client_id: string
+          id?: string
+          key: string
+          value: string
+          xp_awarded?: number
+        }
+        Update: {
+          answered_at?: string
+          client_id?: string
+          id?: string
+          key?: string
+          value?: string
+          xp_awarded?: number
         }
         Relationships: [
           {
-            foreignKeyName: "fk_plano_perfil"
-            columns: ["perfil_id"]
+            foreignKeyName: "progressive_anamnese_client_id_fkey"
+            columns: ["client_id"]
             isOneToOne: false
-            referencedRelation: "perfil_utilizador"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "fk_plano_perfil"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "vw_reavaliacao_pendente"
-            referencedColumns: ["perfil_id"]
-          },
-          {
-            foreignKeyName: "fk_planos_treino_anamnese"
-            columns: ["anamnese_id"]
-            isOneToOne: false
-            referencedRelation: "anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "fk_planos_treino_anamnese"
-            columns: ["anamnese_id"]
-            isOneToOne: false
-            referencedRelation: "vw_historico_anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "fk_planos_treino_anamnese"
-            columns: ["anamnese_id"]
-            isOneToOne: false
-            referencedRelation: "vw_ultima_anamnese"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
       }
-      rpe_config: {
+      session_exercises: {
         Row: {
-          created_at: string | null
+          created_at: string
+          exercise_id: string | null
           id: string
-          nivel: string
-          rpe_deload_max: number | null
-          rpe_deload_min: number | null
-          rpe_maximo: number
+          order_index: number
+          session_id: string
+          workout_exercise_id: string | null
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
+          exercise_id?: string | null
           id?: string
-          nivel: string
-          rpe_deload_max?: number | null
-          rpe_deload_min?: number | null
-          rpe_maximo: number
+          order_index?: number
+          session_id: string
+          workout_exercise_id?: string | null
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
+          exercise_id?: string | null
           id?: string
-          nivel?: string
-          rpe_deload_max?: number | null
-          rpe_deload_min?: number | null
-          rpe_maximo?: number
+          order_index?: number
+          session_id?: string
+          workout_exercise_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "session_exercises_exercise_id_fkey"
+            columns: ["exercise_id"]
+            isOneToOne: false
+            referencedRelation: "exercises"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "session_exercises_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "workout_sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "session_exercises_workout_exercise_id_fkey"
+            columns: ["workout_exercise_id"]
+            isOneToOne: false
+            referencedRelation: "workout_exercises"
+            referencedColumns: ["id"]
+          },
+        ]
       }
-      split_template: {
+      session_series: {
         Row: {
-          created_at: string | null
-          dias_semana: number
-          distribuicao: Json
+          completed: boolean
+          created_at: string
           id: string
-          nivel_recomendado: string[] | null
-          nome: string
+          load_kg: number | null
+          reps_done: number | null
+          rpe: number | null
+          session_exercise_id: string
+          set_number: number
+          time_seconds: number | null
         }
         Insert: {
-          created_at?: string | null
-          dias_semana: number
-          distribuicao: Json
+          completed?: boolean
+          created_at?: string
           id?: string
-          nivel_recomendado?: string[] | null
-          nome: string
+          load_kg?: number | null
+          reps_done?: number | null
+          rpe?: number | null
+          session_exercise_id: string
+          set_number: number
+          time_seconds?: number | null
         }
         Update: {
-          created_at?: string | null
-          dias_semana?: number
-          distribuicao?: Json
+          completed?: boolean
+          created_at?: string
           id?: string
-          nivel_recomendado?: string[] | null
-          nome?: string
+          load_kg?: number | null
+          reps_done?: number | null
+          rpe?: number | null
+          session_exercise_id?: string
+          set_number?: number
+          time_seconds?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "session_series_session_exercise_id_fkey"
+            columns: ["session_exercise_id"]
+            isOneToOne: false
+            referencedRelation: "session_exercises"
+            referencedColumns: ["id"]
+          },
+        ]
       }
-      volume_config: {
+      trainer_clients: {
+        Row: {
+          client_id: string
+          created_at: string | null
+          id: string
+          trainer_id: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string | null
+          id?: string
+          trainer_id: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string | null
+          id?: string
+          trainer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trainer_clients_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trainer_clients_trainer_id_fkey"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
         Row: {
           created_at: string | null
-          genero: string
-          grupo_muscular: string | null
-          grupo_tipo: string
           id: string
-          limite_sessao: number | null
-          mav_max: number
-          mav_min: number
-          mev_max: number
-          mev_min: number
-          mrv: number
-          nivel: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
         }
         Insert: {
           created_at?: string | null
-          genero: string
-          grupo_muscular?: string | null
-          grupo_tipo: string
           id?: string
-          limite_sessao?: number | null
-          mav_max: number
-          mav_min: number
-          mev_max: number
-          mev_min: number
-          mrv: number
-          nivel: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
         }
         Update: {
           created_at?: string | null
-          genero?: string
-          grupo_muscular?: string | null
-          grupo_tipo?: string
           id?: string
-          limite_sessao?: number | null
-          mav_max?: number
-          mav_min?: number
-          mev_max?: number
-          mev_min?: number
-          mrv?: number
-          nivel?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workout_days: {
+        Row: {
+          created_at: string
+          day_number: number
+          focus: string | null
+          id: string
+          name: string | null
+          updated_at: string
+          week_id: string
+        }
+        Insert: {
+          created_at?: string
+          day_number: number
+          focus?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string
+          week_id: string
+        }
+        Update: {
+          created_at?: string
+          day_number?: number
+          focus?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string
+          week_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workout_days_week_id_fkey"
+            columns: ["week_id"]
+            isOneToOne: false
+            referencedRelation: "workout_weeks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workout_exercises: {
+        Row: {
+          created_at: string
+          day_id: string
+          exercise_id: string | null
+          id: string
+          load_kg: number | null
+          notes: string | null
+          order_index: number
+          reps: string | null
+          rest_seconds: number | null
+          sets: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          day_id: string
+          exercise_id?: string | null
+          id?: string
+          load_kg?: number | null
+          notes?: string | null
+          order_index?: number
+          reps?: string | null
+          rest_seconds?: number | null
+          sets?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          day_id?: string
+          exercise_id?: string | null
+          id?: string
+          load_kg?: number | null
+          notes?: string | null
+          order_index?: number
+          reps?: string | null
+          rest_seconds?: number | null
+          sets?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workout_exercises_day_id_fkey"
+            columns: ["day_id"]
+            isOneToOne: false
+            referencedRelation: "workout_days"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workout_exercises_exercise_id_fkey"
+            columns: ["exercise_id"]
+            isOneToOne: false
+            referencedRelation: "exercises"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workout_plans: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          name: string
+          start_date: string
+          status: Database["public"]["Enums"]["plan_status"]
+          trainer_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          name: string
+          start_date?: string
+          status?: Database["public"]["Enums"]["plan_status"]
+          trainer_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          start_date?: string
+          status?: Database["public"]["Enums"]["plan_status"]
+          trainer_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workout_plans_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workout_plans_trainer_id_fkey"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workout_sessions: {
+        Row: {
+          client_id: string
+          created_at: string
+          duration_seconds: number
+          finished_at: string
+          id: string
+          notes: string | null
+          started_at: string
+          title: string | null
+          workout_day_id: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          duration_seconds: number
+          finished_at?: string
+          id?: string
+          notes?: string | null
+          started_at: string
+          title?: string | null
+          workout_day_id: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          duration_seconds?: number
+          finished_at?: string
+          id?: string
+          notes?: string | null
+          started_at?: string
+          title?: string | null
+          workout_day_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workout_sessions_workout_day_id_fkey"
+            columns: ["workout_day_id"]
+            isOneToOne: false
+            referencedRelation: "workout_days"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workout_weeks: {
+        Row: {
+          created_at: string
+          id: string
+          name: string | null
+          plan_id: string
+          updated_at: string
+          week_number: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          plan_id: string
+          updated_at?: string
+          week_number: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string | null
+          plan_id?: string
+          updated_at?: string
+          week_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workout_weeks_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "workout_plans"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
-      vw_historico_anamnese: {
-        Row: {
-          anamnese_anterior_id: string | null
-          data_anterior: string | null
-          data_avaliacao: string | null
-          delta_gordura: number | null
-          delta_peso: number | null
-          gordura_anterior: number | null
-          horas_sono_media: number | null
-          id: string | null
-          nivel_energia: number | null
-          nivel_stress: number | null
-          numero_avaliacao: number | null
-          percentual_gordura: number | null
-          perfil_id: string | null
-          peso_anterior: number | null
-          peso_avaliacao: number | null
-          tipo_anamnese: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "vw_historico_anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "vw_ultima_anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_perfil_id_fkey"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "perfil_utilizador"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_perfil_id_fkey"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "vw_reavaliacao_pendente"
-            referencedColumns: ["perfil_id"]
-          },
-        ]
-      }
-      vw_reavaliacao_pendente: {
-        Row: {
-          dias_atraso: number | null
-          email: string | null
-          nome: string | null
-          perfil_id: string | null
-          proxima_reavaliacao: string | null
-          status_reavaliacao: string | null
-          ultima_avaliacao: string | null
-        }
-        Relationships: []
-      }
-      vw_ultima_anamnese: {
-        Row: {
-          alergias_alimentares: string[] | null
-          alimentos_nao_gosta: string[] | null
-          anamnese_anterior_id: string | null
-          circunferencia_cintura: number | null
-          circunferencia_quadril: number | null
-          compromisso: number | null
-          consumo_agua_litros: number | null
-          cozinha_propria: boolean | null
-          created_at: string | null
-          data_avaliacao: string | null
-          dores_atuais: string[] | null
-          equipamentos_disponiveis: string[] | null
-          exercicios_evitar: string[] | null
-          exercicios_favoritos: string[] | null
-          frequencia_anterior: number | null
-          frequencia_come_fora: number | null
-          horario_acordar: string | null
-          horario_dormir: string | null
-          horario_treino: string | null
-          horas_sono_media: number | null
-          id: string | null
-          lesoes_anteriores: string[] | null
-          maior_dificuldade: string | null
-          medicamentos: string[] | null
-          modalidades_previas: string[] | null
-          motivacao_principal: string | null
-          nivel_energia: number | null
-          nivel_stress: number | null
-          objetivo_nutricional: string | null
-          observacoes: string | null
-          orcamento_alimentacao: string | null
-          percentual_gordura: number | null
-          perfil_id: string | null
-          peso_avaliacao: number | null
-          prefere_maquinas: boolean | null
-          preferencias_alimentares: string[] | null
-          proxima_reavaliacao: string | null
-          refeicoes_dia: number | null
-          restricoes_alimentares: string[] | null
-          restricoes_medicas: string | null
-          suplementos_atuais: string[] | null
-          tempo_preparacao_minutos: number | null
-          tempo_treino_meses: number | null
-          tipo_anamnese: string | null
-          trabalho_tipo: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "vw_historico_anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_anamnese_anterior_id_fkey"
-            columns: ["anamnese_anterior_id"]
-            isOneToOne: false
-            referencedRelation: "vw_ultima_anamnese"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_perfil_id_fkey"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "perfil_utilizador"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "anamnese_perfil_id_fkey"
-            columns: ["perfil_id"]
-            isOneToOne: false
-            referencedRelation: "vw_reavaliacao_pendente"
-            referencedColumns: ["perfil_id"]
-          },
-        ]
-      }
+      [_ in never]: never
     }
     Functions: {
-      fn_criar_reavaliacao: {
-        Args: { p_perfil_id: string; p_tipo?: string }
-        Returns: string
+      can_access_meal_plan: {
+        Args: { _plan_id: string; _user_id: string }
+        Returns: boolean
       }
-      is_admin: { Args: never; Returns: boolean }
-      unaccent: { Args: { "": string }; Returns: string }
+      can_access_workout_plan: {
+        Args: { _plan_id: string; _user_id: string }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_trainer_of: {
+        Args: { _client_id: string; _trainer_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "trainer" | "client"
+      assessment_status: "pending" | "done"
+      meal_type:
+        | "pequeno_almoco"
+        | "lanche_manha"
+        | "almoco"
+        | "lanche_tarde"
+        | "jantar"
+        | "ceia"
+      plan_status: "active" | "inactive" | "draft" | "completed" | "template"
+      workout_status: "pendente" | "em_progresso" | "concluido" | "pulado"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1339,6 +1091,19 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "trainer", "client"],
+      assessment_status: ["pending", "done"],
+      meal_type: [
+        "pequeno_almoco",
+        "lanche_manha",
+        "almoco",
+        "lanche_tarde",
+        "jantar",
+        "ceia",
+      ],
+      plan_status: ["active", "inactive", "draft", "completed", "template"],
+      workout_status: ["pendente", "em_progresso", "concluido", "pulado"],
+    },
   },
 } as const

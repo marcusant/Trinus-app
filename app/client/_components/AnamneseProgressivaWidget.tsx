@@ -69,7 +69,7 @@ export function AnamneseProgressivaWidget({
           <Sparkles className="h-4.5 w-4.5 text-primary animate-pulse" />
           <h4 className="font-extrabold text-sm text-foreground tracking-tight">Sintonizar Corpo · Mente · Essência</h4>
         </div>
-        <span className="text-[10px] text-primary font-bold bg-primary/10 px-2 py-0.5 rounded-full self-start sm:self-auto shrink-0 select-none">
+        <span className="text-xs text-primary font-bold bg-primary/10 px-2 py-0.5 rounded-full self-start sm:self-auto shrink-0 select-none">
           💎 {progressiveProgress}% Completado ({progressiveLogs.length}/{totalQuestions})
         </span>
       </div>
@@ -78,14 +78,14 @@ export function AnamneseProgressivaWidget({
         <form onSubmit={handleProgressiveSubmit} className="space-y-4">
           <div className="p-4 bg-black/40 border border-white/5 rounded-2xl space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">
+              <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">
                 {nextProgressiveQuestion.label}
               </span>
-              <span className="text-[9px] font-bold text-primary flex items-center gap-1 select-none">
-                💎 +50 XP
+              <span className="text-xs font-bold text-primary flex items-center gap-1 select-none">
+                💎 +10 XP
               </span>
             </div>
-            <p className="text-xs font-bold text-white leading-relaxed">
+            <p className="text-sm font-bold text-white leading-relaxed">
               {nextProgressiveQuestion.question}
             </p>
 
@@ -96,7 +96,7 @@ export function AnamneseProgressivaWidget({
                     key={opt}
                     type="button"
                     onClick={() => setQuestionValue(opt)}
-                    className={`px-4 py-2 border rounded-xl text-[10px] font-bold transition duration-300 active:scale-95 cursor-pointer ${
+                    className={`px-4 py-2 border rounded-xl text-xs font-bold transition duration-300 active:scale-95 cursor-pointer ${
                       questionValue === opt
                         ? "border-primary bg-primary/10 text-primary shadow-glow-whisper"
                         : "border-white/5 bg-black/40 text-zinc-400 hover:border-white/10 hover:text-white"
@@ -130,7 +130,7 @@ export function AnamneseProgressivaWidget({
               type="submit"
               disabled={isSubmittingQuestion || !questionValue.trim()}
               size="sm"
-              className="bg-primary/90 hover:bg-primary/90 text-primary-foreground font-bold cursor-pointer text-[10px] py-2.5 px-4 rounded-xl shadow-glow"
+              className="bg-primary/90 hover:bg-primary/90 text-primary-foreground font-bold cursor-pointer text-xs py-2.5 px-4 rounded-xl shadow-glow"
             >
               {isSubmittingQuestion ? (
                 <>
@@ -152,7 +152,7 @@ export function AnamneseProgressivaWidget({
             <span className="font-bold text-xs text-foreground block">
               Perfil 100% Sintonizado com o Cosmos!
             </span>
-            <span className="text-[10px] text-muted-foreground leading-relaxed block mt-0.5">
+            <span className="text-xs text-muted-foreground leading-relaxed block mt-0.5">
               Parabéns! Completaste todas as etapas da tua Anamnese Progressiva. O teu AI Coach agora opera com precisão total em memória e todas as abas da aplicação estão desbloqueadas.
             </span>
           </div>

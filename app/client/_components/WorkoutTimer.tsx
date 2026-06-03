@@ -9,7 +9,7 @@ interface WorkoutTimerProps {
   timerSeconds: number
   isPending: boolean
   fmt: (s: number) => string
-  handleStopWorkout: () => void
+  handleFinishWorkout: () => void
 }
 
 export function WorkoutTimer({
@@ -17,7 +17,7 @@ export function WorkoutTimer({
   timerSeconds,
   isPending,
   fmt,
-  handleStopWorkout,
+  handleFinishWorkout,
 }: WorkoutTimerProps) {
   if (!isTimerRunning) return null
 
@@ -28,9 +28,9 @@ export function WorkoutTimer({
         <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Treino em Curso</span>
       </div>
       <span className="text-2xl font-black text-foreground tabular-nums block mb-2">{fmt(timerSeconds)}</span>
-      <Button size="sm" className="w-full bg-destructive hover:bg-destructive/90 text-destructive-foreground text-xs font-bold cursor-pointer" onClick={handleStopWorkout} disabled={isPending}>
+      <Button size="sm" className="w-full bg-destructive hover:bg-destructive/90 text-destructive-foreground text-xs font-bold cursor-pointer" onClick={handleFinishWorkout} disabled={isPending}>
         {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : <Square className="h-3 w-3 mr-1" />}
-        Parar e Registar
+        Concluir treino
       </Button>
     </div>
   )

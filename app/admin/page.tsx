@@ -7,6 +7,7 @@ import { updateUserRole } from "@/lib/actions/admin"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
+import { BrandLogo } from "@/components/ui/brand-logo"
 import {
   LogOut,
   ShieldAlert,
@@ -35,7 +36,7 @@ interface UserProfile {
   email: string | null
   avatar_url: string | null
   role: 'admin' | 'trainer' | 'client'
-  created_at: string
+  created_at: string | null
 }
 
 interface Exercise {
@@ -253,14 +254,7 @@ export default function AdminDashboard() {
         <div>
           {/* Logo */}
           <div className="flex items-center gap-3 mb-8">
-            <svg viewBox="0 0 40 40" className="w-9 h-9 fill-none stroke-primary stroke-[1.8] transition-all duration-300 hover:scale-105 shrink-0">
-              <path d="M12 28V14L16 18L20 10L24 18L28 14V28" strokeLinejoin="round" strokeLinecap="round" />
-              <path d="M20 10V30" strokeLinecap="round" />
-              <circle cx="20" cy="30" r="1" fill="currentColor" />
-            </svg>
-            <div className="flex items-baseline gap-1">
-              <span className="font-black tracking-tight text-primary text-base">TRINUS</span>
-            </div>
+            <BrandLogo variant="full" className="h-8 w-auto transition-all duration-300 hover:scale-[1.02]" />
           </div>
 
           {/* Profile Card in Sidebar */}
@@ -269,8 +263,8 @@ export default function AdminDashboard() {
               {(adminName || "A").substring(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
-              <span className="font-bold text-sm text-foreground block truncate">{adminName}</span>
-              <span className="text-[10px] text-pillar-essence bg-pillar-essence/10 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider inline-block mt-1">
+              <span className="font-bold text-sm sm:text-base text-foreground block truncate">{adminName}</span>
+              <span className="text-[11px] text-pillar-essence bg-pillar-essence/10 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider inline-block mt-1">
                 Admin
               </span>
             </div>
@@ -324,16 +318,12 @@ export default function AdminDashboard() {
         <header className="px-4 pt-5 pb-4 mx-auto w-full max-w-5xl xl:hidden flex items-center justify-between border-b border-white/5 bg-card/60 backdrop-blur-xl">
           <div className="flex items-center gap-3">
             {/* SSOT Trident Logo on mobile header */}
-            <svg viewBox="0 0 40 40" className="w-8 h-8 fill-none stroke-primary stroke-[1.8] shrink-0 transition-transform duration-300 hover:scale-105">
-              <path d="M12 28V14L16 18L20 10L24 18L28 14V28" strokeLinejoin="round" strokeLinecap="round" />
-              <path d="M20 10V30" strokeLinecap="round" />
-              <circle cx="20" cy="30" r="1" fill="currentColor" />
-            </svg>
+            <BrandLogo variant="trident" className="h-8 w-auto transition-transform duration-300 hover:scale-105" />
             <div>
               <h1 className="text-sm font-extrabold tracking-tight">
                 Olá, <span className="text-primary">{adminName.split(" ")[0]}</span>
               </h1>
-              <span className="text-[9px] text-pillar-essence bg-pillar-essence/10 px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
+              <span className="text-[11px] text-pillar-essence bg-pillar-essence/10 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
                 Admin
               </span>
             </div>
@@ -344,7 +334,7 @@ export default function AdminDashboard() {
             size="xs"
             onClick={handleLogout}
             disabled={logoutLoading || isLoading}
-            className="border-white/5 bg-card hover:bg-destructive/10 hover:text-destructive text-[10px] cursor-pointer"
+            className="border-white/5 bg-card hover:bg-destructive/10 hover:text-destructive text-xs cursor-pointer"
           >
             {logoutLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : <LogOut className="h-3 w-3" />}
           </Button>
@@ -387,7 +377,7 @@ export default function AdminDashboard() {
                       <Users className="h-5 w-5 text-pillar-body" />
                     </div>
                     <span className="text-4xl font-black text-foreground">{stats.clients}</span>
-                    <div className="text-[10px] text-muted-foreground mt-2">
+                    <div className="text-xs text-muted-foreground mt-2">
                       Todos mapeados na tabela `profiles`
                     </div>
                   </div>
@@ -399,7 +389,7 @@ export default function AdminDashboard() {
                       <Users className="h-5 w-5 text-pillar-mind" />
                     </div>
                     <span className="text-4xl font-black text-foreground">{stats.trainers}</span>
-                    <div className="text-[10px] text-muted-foreground mt-2">
+                    <div className="text-xs text-muted-foreground mt-2">
                       Conexões ativas: <span className="text-pillar-mind font-bold">{stats.totalConnections}</span> aluno(s) vinculados
                     </div>
                   </div>
@@ -411,7 +401,7 @@ export default function AdminDashboard() {
                       <Dumbbell className="h-5 w-5 text-pillar-essence" />
                     </div>
                     <span className="text-4xl font-black text-foreground">{stats.totalExercises}</span>
-                    <div className="text-[10px] text-muted-foreground mt-2">
+                    <div className="text-xs text-muted-foreground mt-2">
                       Planos de treino ativos: <span className="text-pillar-essence font-bold">{stats.totalPlans}</span>
                     </div>
                   </div>
@@ -583,7 +573,7 @@ export default function AdminDashboard() {
                                 </td>
                                 <td className="px-6 py-4 text-xs font-medium">{userItem.email}</td>
                                 <td className="px-6 py-4">
-                                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${userItem.role === 'admin' ? 'text-pillar-essence bg-pillar-essence/10' :
+                                  <span className={`text-[11px] px-2.5 py-0.5 rounded-full font-bold uppercase ${userItem.role === 'admin' ? 'text-pillar-essence bg-pillar-essence/10' :
                                     userItem.role === 'trainer' ? 'text-pillar-mind bg-pillar-mind/10' :
                                       'text-pillar-body bg-pillar-body/10'
                                     }`}>
@@ -625,7 +615,7 @@ export default function AdminDashboard() {
                         <h3 className="font-bold text-lg text-foreground">{selectedUser.full_name || "Sem Nome"}</h3>
                         <p className="text-xs text-muted-foreground mt-1">{selectedUser.email}</p>
 
-                        <span className={`inline-block text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase mt-3 ${selectedUser.role === 'admin' ? 'text-pillar-essence bg-pillar-essence/10' :
+                        <span className={`inline-block text-[11px] px-2.5 py-0.5 rounded-full font-bold uppercase mt-3 ${selectedUser.role === 'admin' ? 'text-pillar-essence bg-pillar-essence/10' :
                           selectedUser.role === 'trainer' ? 'text-pillar-mind bg-pillar-mind/10' :
                             'text-pillar-body bg-pillar-body/10'
                           }`}>
@@ -648,25 +638,25 @@ export default function AdminDashboard() {
                               disabled={selectedUser.id === adminId || isPending}
                               onClick={() => handleRoleChange(selectedUser.id, option.r as any)}
                               className={`flex flex-col text-left p-3 rounded-xl border transition text-xs cursor-pointer ${selectedUser.role === option.r
-                                ? 'bg-primary-subtle border-primary text-foreground'
+                                ? 'bg-emerald-950/20 border-emerald-400 text-foreground'
                                 : 'bg-black/30 border-white/5 text-muted-foreground hover:bg-white/5 hover:border-white/10'
                                 }`}
                             >
                               <span className="font-bold text-foreground">{option.label}</span>
-                              <span className="text-[10px] text-muted-foreground mt-1">{option.desc}</span>
+                              <span className="text-xs text-muted-foreground mt-1">{option.desc}</span>
                             </button>
                           ))}
                         </div>
 
                         {isPending && (
-                          <div className="flex items-center justify-center gap-2 text-xs text-primary font-semibold animate-pulse mt-4">
+                          <div className="flex items-center justify-center gap-2 text-xs text-emerald-400 font-semibold animate-pulse mt-4">
                             <Loader2 className="h-3.5 w-3.5 animate-spin" />
                             <span>Atualizando papel no banco...</span>
                           </div>
                         )}
 
                         {selectedUser.id === adminId && (
-                          <p className="text-[10px] text-amber-500 italic leading-relaxed text-center">
+                          <p className="text-xs text-amber-500 italic leading-relaxed text-center">
                             A sua própria conta de administrador está protegida contra rebaixamento acidental.
                           </p>
                         )}
@@ -761,11 +751,11 @@ export default function AdminDashboard() {
                       >
                         <div>
                           <div className="flex items-start justify-between gap-2 mb-3">
-                            <span className="text-[10px] font-bold text-pillar-essence bg-pillar-essence/10 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            <span className="text-[11px] font-bold text-pillar-essence bg-pillar-essence/10 px-2 py-0.5 rounded-full uppercase tracking-wider">
                               {ex.exercise_code || "EX"}
                             </span>
                             {ex.difficulty && (
-                              <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase ${ex.difficulty === 'advanced' ? 'text-destructive bg-destructive/10' :
+                              <span className={`text-[11px] font-bold px-2 py-0.5 rounded uppercase ${ex.difficulty === 'advanced' ? 'text-destructive bg-destructive/10' :
                                 ex.difficulty === 'intermediate' ? 'text-amber-500 bg-amber-500/10' :
                                   'text-pillar-mind bg-pillar-mind/10'
                                 }`}>

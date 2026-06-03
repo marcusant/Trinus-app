@@ -3,6 +3,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Loader2, LogOut, Sun, CloudSun, Moon } from "lucide-react"
+import { BrandLogo } from "@/components/ui/brand-logo"
 import type { LevelInfo } from "../_types/client.types"
 
 interface ClientHeaderProps {
@@ -41,11 +42,7 @@ export function ClientHeader({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {/* SSOT Trident Logo on mobile header */}
-            <svg viewBox="0 0 40 40" className="w-8 h-8 fill-none stroke-primary stroke-[1.8] shrink-0 transition-transform duration-300 hover:scale-105">
-              <path d="M12 28V14L16 18L20 10L24 18L28 14V28" strokeLinejoin="round" strokeLinecap="round" />
-              <path d="M20 10V30" strokeLinecap="round" />
-              <circle cx="20" cy="30" r="1" fill="currentColor" />
-            </svg>
+            <BrandLogo variant="trident" className="h-8 w-auto transition-transform duration-300 hover:scale-105" />
             <div>
               <div className="flex items-center gap-2">
                 {getGreetingIcon()}
@@ -53,12 +50,12 @@ export function ClientHeader({
                   {getGreeting()}, <span className="text-primary">{userName.split(" ")[0]}</span>
                   <span className="text-xs bg-black/40 border border-white/5 px-2 py-0.5 rounded-full flex items-center gap-1 font-semibold shrink-0 select-none">
                     <span>{userLevel.icon}</span>
-                    <span style={{ color: userLevel.color }} className="text-[10px]">{userLevel.name}</span>
+                    <span style={{ color: userLevel.color }} className="text-[11px]">{userLevel.name}</span>
                   </span>
                 </h1>
               </div>
               {trainerName && (
-                <p className="text-[10px] text-muted-foreground mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   Treinador: <span className="font-semibold text-pillar-mind">{trainerName}</span>
                 </p>
               )}
@@ -70,7 +67,7 @@ export function ClientHeader({
             size="xs"
             onClick={handleLogout}
             disabled={logoutLoading}
-            className="border-white/5 bg-card hover:bg-destructive/10 hover:text-destructive text-[10px] cursor-pointer"
+            className="border-white/5 bg-card hover:bg-destructive/10 hover:text-destructive text-xs cursor-pointer"
           >
             {logoutLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : <LogOut className="h-3 w-3" />}
           </Button>
@@ -101,7 +98,7 @@ export function ClientHeader({
             </span>
             <span className="w-px h-3 bg-white/10" />
             <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
-            <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider select-none">Online</span>
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider select-none">Online</span>
           </div>
         </div>
       </header>

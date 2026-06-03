@@ -44,6 +44,22 @@ export interface WorkoutSession {
   finished_at: string
   duration_seconds: number
   workout_day_id: string
+  title?: string | null
+  notes?: string | null
+}
+
+/**
+ * Instantâneo capturado ao concluir o treino, exibido no ecrã de resumo
+ * (estilo Hevy) antes de o aluno guardar/descartar. A persistência só acontece
+ * quando o aluno confirma em "Salvar".
+ */
+export interface WorkoutSummaryData {
+  dayId: string
+  durationSeconds: number
+  volumeKg: number
+  setsCount: number
+  /** ISO da conclusão (campo "When" do resumo). */
+  finishedAt: string
 }
 
 export interface Assessment {
@@ -117,4 +133,43 @@ export interface LevelInfo {
   color: string
   minXP: number
   maxXP: number
+}
+
+/** Estado editável de uma série durante o registo de treino (estilo Hevy). */
+export interface SetEntry {
+  reps_done: string
+  load_kg: string
+  /** PSE/RPE selecionado (6..10, passos de 0.5) ou null se não registado. */
+  rpe: number | null
+  completed: boolean
+}
+
+/** Mapa keyed pelo id do workout_exercise (prescrição) → séries do aluno. */
+export type WorkoutLogs = Record<string, SetEntry[]>
+
+/** Desempenho de uma série na sessão anterior (coluna "Anterior" estilo Hevy). */
+export interface PreviousSet {
+  set_number: number
+  reps_done: number | null
+  load_kg: number | null
+  rpe: number | null
+}
+
+/** Mapa keyed pelo id do workout_exercise → séries da última sessão registada. */
+export type PreviousSets = Record<string, PreviousSet[]>
+
+/** Payload enviado à server action de persistência. */
+export interface SeriesPayload {
+  set_number: number
+  reps_done: number | null
+  load_kg: number | null
+  rpe: number | null
+  completed: boolean
+}
+
+export interface ExerciseLogPayload {
+  workout_exercise_id: string | null
+  exercise_id: string | null
+  order_index: number
+  series: SeriesPayload[]
 }

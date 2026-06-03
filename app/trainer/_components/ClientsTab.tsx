@@ -1,6 +1,7 @@
 // app/trainer/_components/ClientsTab.tsx
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   Dumbbell,
@@ -118,6 +119,17 @@ export function ClientsTab({
               </div>
 
               <div className="flex items-center gap-2">
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="border-white/5 bg-black/40 hover:bg-white/5 text-xs font-semibold cursor-pointer"
+                >
+                  <Link href={`/trainer/anamnese/${selectedClient.id}`}>
+                    <FileText className="h-3.5 w-3.5 mr-1 text-primary" />
+                    Anamnese
+                  </Link>
+                </Button>
                 <Button
                   size="sm"
                   variant="outline"
