@@ -17,7 +17,7 @@ const APP_DIR = path.resolve('app')
 
 const PNG_SIZES = [192, 512]
 const FAVICON_SIZE = 64
-const PADDING_RATIO = 0.03 // 3% de respiro em volta do tridente (símbolo maior)
+const PADDING_RATIO = 0.01 // 1% de respiro — tridente o maior possível no quadro
 
 /**
  * Remove o fundo escuro da logo deixando só o tridente colorido.
