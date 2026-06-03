@@ -10,7 +10,6 @@ import {
   ChevronDown,
   Loader2,
   Play,
-  Square,
   Check,
   Plus,
   Minus,
@@ -44,10 +43,8 @@ interface TreinosTabProps {
   isTimerRunning: boolean
   timerSeconds: number
   activeWorkoutDayId: string | null
-  isPending: boolean
   fmt: (s: number) => string
   handleStartWorkout: (dayId: string) => void
-  handleFinishWorkout: () => void
   // Registo de séries (Hevy)
   workoutLogs: WorkoutLogs
   updateSet: (exId: string, setIdx: number, field: "reps_done" | "load_kg", value: string) => void
@@ -82,10 +79,8 @@ export function TreinosTab({
   isTimerRunning,
   timerSeconds,
   activeWorkoutDayId,
-  isPending,
   fmt,
   handleStartWorkout,
-  handleFinishWorkout,
   workoutLogs,
   updateSet,
   toggleSet,
@@ -197,11 +192,7 @@ export function TreinosTab({
                         <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-success bg-success/10 border border-success/15 py-2.5 rounded-xl">
                           <CheckCircle className="h-3.5 w-3.5" /> Treino concluído
                         </div>
-                      ) : isActive ? (
-                        <Button size="sm" className="w-full bg-destructive hover:bg-destructive/90 text-destructive-foreground text-xs font-bold cursor-pointer" onClick={handleFinishWorkout} disabled={isPending}>
-                          <Square className="h-3.5 w-3.5 mr-1.5" /> Concluir treino · {fmt(timerSeconds)}
-                        </Button>
-                      ) : (
+                      ) : isActive ? null : (
                         <Button size="sm" className="w-full bg-primary hover:brightness-110 text-primary-foreground text-xs font-bold cursor-pointer" onClick={() => handleStartWorkout(day.id)} disabled={isTimerRunning || isExercisesLoading}>
                           <Play className="h-3.5 w-3.5 mr-1.5 fill-current" /> Iniciar treino
                         </Button>

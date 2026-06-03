@@ -135,13 +135,14 @@ export default function ClientDashboard() {
       {/* Main Content Area */}
       <div className="flex-1 xl:pl-64 min-h-screen pb-24 xl:pb-8 flex flex-col w-full">
 
-        {/* Floating Workout Timer */}
+        {/* Barra fixa do treino (topo, estilo Hevy) */}
         <WorkoutTimer
           isTimerRunning={isTimerRunning}
           timerSeconds={timerSeconds}
           isPending={isPending}
           fmt={fmt}
           handleFinishWorkout={handleFinishWorkout}
+          startRest={startRest}
         />
 
         {/* Barra de descanso (contagem decrescente, estilo Hevy) */}
@@ -155,8 +156,6 @@ export default function ClientDashboard() {
 
         {/* Header (Mobile + Desktop) */}
         <ClientHeader
-          userName={userName}
-          userLevel={userLevel}
           trainerName={trainerName}
           logoutLoading={logoutLoading}
           handleLogout={handleLogout}
@@ -210,10 +209,8 @@ export default function ClientDashboard() {
               isTimerRunning={isTimerRunning}
               timerSeconds={timerSeconds}
               activeWorkoutDayId={activeWorkoutDayId}
-              isPending={isPending}
               fmt={fmt}
               handleStartWorkout={handleStartWorkout}
-              handleFinishWorkout={handleFinishWorkout}
               workoutLogs={workoutLogs}
               updateSet={updateSet}
               toggleSet={toggleSet}
